@@ -82,7 +82,7 @@ API_KEY = config["API_KEY"]
 LAAS_PRESET_HASH = config["LAAS_PRESET_HASH"]
 
 # 제목 및 부제목
-st.markdown('<h1 class="title">Chat Doc</h1>', unsafe_allow_html=True)
+st.markdown('<img src="icon_url_or_path" style="height: 30px; vertical-align: bottom;"> <span class="title">Chat Doc</span>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">I\'ll create a work guide to help you stay on task.<br>Please enter your Messenger conversations and I\'ll organize them into a task guide.</p>', unsafe_allow_html=True)
 
 # LaaS Preset API 호출 함수 (POST 요청, chat/completions)
