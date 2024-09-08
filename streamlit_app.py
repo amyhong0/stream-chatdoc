@@ -33,7 +33,6 @@ st.markdown("""
     .stColumn {
         padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .left-column {
         background-color: #e6e6e6;
@@ -48,6 +47,9 @@ st.markdown("""
         background-color: white !important;
         color: #4a4a4a !important;
     }
+    .stTextArea textarea:hover, .stTextInput input:hover {
+        border-color: #0000FF !important;
+    }
     .stButton > button {
         background-color: #add8e6 !important;
         color: #4a4a4a !important;
@@ -58,6 +60,7 @@ st.markdown("""
     .stButton > button:hover {
         background-color: #90c7e3 !important;
         box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+        border-color: #0000FF !important;
     }
     a {
         color: #4a4a4a !important;
