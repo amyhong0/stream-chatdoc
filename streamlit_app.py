@@ -39,6 +39,18 @@ st.markdown("""
     .left-column {
         background-color: #e6e6e6;
     }
+    .stButton>button {
+    background-color: #ff9900;
+    color: white;
+    font-weight: bold;
+    }
+    .stTextArea>div>div>textarea {
+        background-color: #f0f2f6;
+    }
+    h3 {
+        color: #333;
+        margin-top: 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -89,7 +101,7 @@ left_column, right_column = st.columns([1, 1])
 # 왼쪽 열: 입력 섹션
 with left_column:
     st.markdown('<div class="stColumn left-column">', unsafe_allow_html=True)
-    st.subheader("Input")
+    st.subheader('<h3>Input<\h3>', unsafe_allow_html=True)
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide"):
         if user_input:
@@ -98,7 +110,7 @@ with left_column:
             # 오른쪽 열에 결과 표시
             with right_column:
                 st.markdown('<div class="stColumn">', unsafe_allow_html=True)
-                st.subheader("Generated Guide")
+                st.subheader('<h3>Generated Guide<\h3>', unsafe_allow_html=True)
                 st.write(guide)
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
@@ -108,7 +120,7 @@ with left_column:
 # 오른쪽 열: 결과 섹션 (초기 상태)
 with right_column:
     st.markdown('<div class="stColumn">', unsafe_allow_html=True)
-    st.subheader("Generated Guide")
+    st.subheader('<h3>Generated Guide</h3>', unsafe_allow_html=True)
     st.write("The generated guide will appear here after you input a conversation and click 'Generate Guide'.")
     st.markdown('</div>', unsafe_allow_html=True)
 
