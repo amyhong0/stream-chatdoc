@@ -25,7 +25,7 @@ st.markdown("""
     }
     .subtitle {
         font-size: 18px;
-        color: #666;
+        color: #4a4a4a;
         text-align: center;
         margin-bottom: 30px;
         line-height: 1.5;
@@ -35,21 +35,25 @@ st.markdown("""
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        height: 100%;
     }
     .left-column {
         background-color: #e6e6e6;
     }
+    h3, .stTextArea label, .stTextInput label {
+        color: #4a4a4a !important;
+    }
+    .stTextArea textarea, .stTextInput input {
+        background-color: white !important;
+        color: #4a4a4a !important;
+    }
     .stButton>button {
-    background-color: #ff9900;
-    color: white;
-    font-weight: bold;
+        background-color: #90EE90 !important;
+        color: #4a4a4a !important;
+        font-weight: bold !important;
     }
-    .stTextArea>div>div>textarea {
-        background-color: #f0f2f6;
-    }
-    h3 {
-        color: #333;
-        margin-top: 0;
+    .stButton>button:hover {
+        background-color: #7CFC00 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -64,7 +68,6 @@ LAAS_PRESET_HASH = config["LAAS_PRESET_HASH"]
 # 제목 및 부제목
 st.markdown('<h1 class="title">Chat Doc</h1>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">I\'ll create a work guide to help you stay on task.<br>Please enter your Messenger conversations and I\'ll organize them into a task guide.</p>', unsafe_allow_html=True)
-
 
 # LaaS Preset API 호출 함수 (POST 요청, chat/completions)
 def get_chat_completions(messages):
@@ -94,33 +97,35 @@ def get_chat_completions(messages):
     except Exception as e:
         return f"LaaS API 호출 중 예외 발생: {e}"
 
-
 # 화면을 두 개의 열로 분할
-left_column, right_column = st.columns([1, 1])
+left_column, right_column = st.columns(2)
 
 # 왼쪽 열: 입력 섹션
 with left_column:
-    st.markdown('<div class="stColumn left-column">', unsafe_allow_html=True)
-    st.markdown('<h3>Input</h3>', unsafe_allow_html=True)
-    user_input = st.text_area("Please enter the conversation:", height=300)
-    if st.button("Generate Guide"):
-        if user_input:
-            with st.spinner("Generating guide..."):
-                guide = get_chat_completions(user_input)
-            # 오른쪽 열에 결과 표시
-            with right_column:
-                st.markdown('<div class="stColumn">', unsafe_allow_html=True)
-                st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-                st.write(guide)
-                st.markdown('</div>', unsafe_allow_html=True)
-        else:
-            st.warning("Please enter a conversation")
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.container():
+        st.markdown('<div class="stColumn left-column">', unsafe_allow_html=True)
+        st.markdown('<h3>Input</h3>', unsafe_allow_html=True)
+        user_input = st.text_area("Please enter the conversation:", height=300)
+        if st.button("Generate Guide"):
+            if user_input:
+                with st.spinner("Generating guide..."):
+                    guide = get_chat_completions(user_input)
+                # 오른쪽 열에 결과 표시
+                with right_column:
+                    with st.container():
+                        st.markdown('<div class="stColumn">', unsafe_allow_html=True)
+                        st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
+                        st.write(guide)
+                        st.markdown('</div>', unsafe_allow_html=True)
+            else:
+                st.warning("Please enter a conversation")
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # 오른쪽 열: 결과 섹션 (초기 상태)
 with right_column:
-    st.markdown('<div class="stColumn">', unsafe_allow_html=True)
-    st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-    st.write("The generated guide will appear here after you input a conversation and click 'Generate Guide'.")
-    st.markdown('</div>', unsafe_allow_html=True)
+    with st.container():
+        st.markdown('<div class="stColumn">', unsafe_allow_html=True)
+        st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
+        st.write("The generated guide will appear here after you input a conversation and click 'Generate Guide'.")
+        st.markdown('</div>', unsafe_allow_html=True)
 
