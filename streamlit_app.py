@@ -5,12 +5,54 @@ import json
 # 페이지 설정
 st.set_page_config(layout="wide", page_title="Chat Doc")
 
+# CSS 스타일 정의
+st.markdown("""
+<style>
+    .main {
+        background-color: #f0f2f6;
+    }
+    .stApp {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .title {
+        font-size: 50px;
+        color: #4a4a4a;
+        text-align: center;
+        padding: 20px 0;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    .subtitle {
+        font-size: 18px;
+        color: #666;
+        text-align: center;
+        margin-bottom: 30px;
+        line-height: 1.5;
+    }
+    .stColumn {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .left-column {
+        background-color: #e6e6e6;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # config.json에서 API URL 및 API KEY 가져오기
 with open('config.json') as config_file:
     config = json.load(config_file)
 
 API_KEY = config["API_KEY"]
 LAAS_PRESET_HASH = config["LAAS_PRESET_HASH"]
+
+# 제목 및 부제목
+st.markdown('<h1 class="title">Chat Doc</h1>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">I'll create a work guide to help you stay on task.<br>Please enter your Messenger conversations and I'll organize them into a task guide.</p>', unsafe_allow_html=True)
+
 
 # LaaS Preset API 호출 함수 (POST 요청, chat/completions)
 def get_chat_completions(messages):
@@ -40,16 +82,14 @@ def get_chat_completions(messages):
     except Exception as e:
         return f"LaaS API 호출 중 예외 발생: {e}"
 
-# 제목
-st.title("Chat Doc")
-st.write("Input your messenger conversations and get them organized into concise guides.")
 
 # 화면을 두 개의 열로 분할
-left_column, right_column = st.columns(2)
+left_column, right_column = st.columns([1, 1])
 
 # 왼쪽 열: 입력 섹션
 with left_column:
-    st.header("Input")
+    st.markdown('<div class="stColumn left-column">', unsafe_allow_html=True)
+    st.subheader("Input")
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide"):
         if user_input:
@@ -57,25 +97,18 @@ with left_column:
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
-                st.header("Generated Guide")
+                st.markdown('<div class="stColumn">', unsafe_allow_html=True)
+                st.subheader("Generated Guide")
                 st.write(guide)
+                st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.warning("Please enter a conversation")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # 오른쪽 열: 결과 섹션 (초기 상태)
 with right_column:
-    st.header("Generated Guide")
+    st.markdown('<div class="stColumn">', unsafe_allow_html=True)
+    st.subheader("Generated Guide")
     st.write("The generated guide will appear here after you input a conversation and click 'Generate Guide'.")
-
-# 스타일 적용
-st.markdown("""
-<style>
-    .stButton>button {
-        width: 100%;
-    }
-    .stTextArea>div>div>textarea {
-        background-color: #f0f2f6;
-    }
-</style>
-""", unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
