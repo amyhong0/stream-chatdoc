@@ -1,6 +1,16 @@
 import streamlit as st
 import requests
 import json
+import base64
+
+# 아이콘 이미지를 base64로 인코딩하는 함수
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# 아이콘 이미지 파일의 경로
+icon_path = "chatdoc_icon.png"
 
 # 페이지 설정
 st.set_page_config(layout="wide", page_title="Chat Doc")
@@ -15,11 +25,20 @@ st.markdown("""
         max-width: 1200px;
         margin: 0 auto;
     }
+    .title-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .title-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
     .title {
         font-size: 50px;
         color: #4a4a4a;
-        text-align: center;
-        padding: 20px 0;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
@@ -82,8 +101,14 @@ API_KEY = config["API_KEY"]
 LAAS_PRESET_HASH = config["LAAS_PRESET_HASH"]
 
 # 제목 및 부제목
-st.markdown('<img src="chatdoc_icon.png" style="height: 30px; vertical-align: bottom;"> <span class="title">Chat Doc</span>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">I\'ll create a work guide to help you stay on task.<br>Please enter your Messenger conversations and I\'ll organize them into a task guide.</p>', unsafe_allow_html=True)
+icon_base64 = get_base64_of_bin_file(icon_path)
+st.markdown(f"""
+    <div class="title-container">
+        <img src="data:image/png;base64,{icon_base64}" class="title-icon">
+        <h1 class="title">Chat Doc</h1>
+    </div>
+    <p class="subtitle">I'll create a work guide to help you stay on task.<br>Please enter your Messenger conversations and I'll organize them into a task guide.</p>
+    """, unsafe_allow_html=True)
 
 # LaaS Preset API 호출 함수 (POST 요청, chat/completions)
 def get_chat_completions(messages):
