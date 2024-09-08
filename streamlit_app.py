@@ -30,15 +30,18 @@ st.markdown("""
         margin-bottom: 30px;
         line-height: 1.5;
     }
-    .stColumn {
-        padding: 20px;
-        border-radius: 10px;
+    .stColumn > div > div {
+        padding-top: 0 !important;
     }
-    .left-column {
+    .left-column > div {
         background-color: #e6e6e6;
+        border-radius: 10px;
+        padding: 20px;
     }
-    .right-column {
+    .right-column > div {
         background-color: white;
+        border-radius: 10px;
+        padding: 20px;
     }
     h3, .stTextArea label, .stTextInput label, .stMarkdown p, .stText p {
         color: #4a4a4a !important;
@@ -115,8 +118,8 @@ left_column, right_column = st.columns(2)
 
 # 왼쪽 열: 입력 섹션
 with left_column:
-    st.markdown('<div class="stColumn left-column">', unsafe_allow_html=True)
-    st.markdown('<h3>Conversations</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="left-column">', unsafe_allow_html=True)
+    st.markdown('<h3>Conversation</h3>', unsafe_allow_html=True)
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide"):
         if user_input:
@@ -124,9 +127,9 @@ with left_column:
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
-                st.markdown('<div class="stColumn right-column">', unsafe_allow_html=True)
+                st.markdown('<div class="right-column">', unsafe_allow_html=True)
                 st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-                st.markdown(f'<p style="color: #4a4a4a;">{guide}</p>', unsafe_allow_html=True)
+                st.markdown(f'<p>{guide}</p>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.warning("Please enter a conversation")
@@ -134,8 +137,8 @@ with left_column:
 
 # 오른쪽 열: 결과 섹션 (초기 상태)
 with right_column:
-    st.markdown('<div class="stColumn right-column">', unsafe_allow_html=True)
+    st.markdown('<div class="right-column">', unsafe_allow_html=True)
     st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #4a4a4a;">The generated guide will appear here after you input a conversation and click \'Generate Guide\'.</p>', unsafe_allow_html=True)
+    st.markdown('<p>The generated guide will appear here after you input a conversation and click \'Generate Guide\'.</p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
