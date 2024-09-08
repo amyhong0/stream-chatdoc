@@ -40,7 +40,7 @@ st.markdown("""
     .left-column {
         background-color: #e6e6e6;
     }
-    h3, .stTextArea label, .stTextInput label {
+    h3, .stTextArea label, .stTextInput label, .stMarkdown p {
         color: #4a4a4a !important;
     }
     .stTextArea textarea, .stTextInput input {
@@ -54,6 +54,11 @@ st.markdown("""
     }
     .stButton>button:hover {
         background-color: #7CFC00 !important;
+    }
+    .column-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -102,30 +107,27 @@ left_column, right_column = st.columns(2)
 
 # 왼쪽 열: 입력 섹션
 with left_column:
-    with st.container():
-        st.markdown('<div class="stColumn left-column">', unsafe_allow_html=True)
-        st.markdown('<h3>Input</h3>', unsafe_allow_html=True)
-        user_input = st.text_area("Please enter the conversation:", height=300)
-        if st.button("Generate Guide"):
-            if user_input:
-                with st.spinner("Generating guide..."):
-                    guide = get_chat_completions(user_input)
-                # 오른쪽 열에 결과 표시
-                with right_column:
-                    with st.container():
-                        st.markdown('<div class="stColumn">', unsafe_allow_html=True)
-                        st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-                        st.write(guide)
-                        st.markdown('</div>', unsafe_allow_html=True)
-            else:
-                st.warning("Please enter a conversation")
-        st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="stColumn left-column"><div class="column-content">', unsafe_allow_html=True)
+    st.markdown('<h3>Input</h3>', unsafe_allow_html=True)
+    user_input = st.text_area("Please enter the conversation:", height=300)
+    if st.button("Generate Guide"):
+        if user_input:
+            with st.spinner("Generating guide..."):
+                guide = get_chat_completions(user_input)
+            # 오른쪽 열에 결과 표시
+            with right_column:
+                st.markdown('<div class="stColumn"><div class="column-content">', unsafe_allow_html=True)
+                st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
+                st.markdown(f'<p>{guide}</p>', unsafe_allow_html=True)
+                st.markdown('</div></div>', unsafe_allow_html=True)
+        else:
+            st.warning("Please enter a conversation")
+    st.markdown('</div></div>', unsafe_allow_html=True)
 
 # 오른쪽 열: 결과 섹션 (초기 상태)
 with right_column:
-    with st.container():
-        st.markdown('<div class="stColumn">', unsafe_allow_html=True)
-        st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-        st.write("The generated guide will appear here after you input a conversation and click 'Generate Guide'.")
-        st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="stColumn"><div class="column-content">', unsafe_allow_html=True)
+    st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
+    st.markdown('<p>The generated guide will appear here after you input a conversation and click \'Generate Guide\'.</p>', unsafe_allow_html=True)
+    st.markdown('</div></div>', unsafe_allow_html=True)
 
