@@ -31,34 +31,39 @@ st.markdown("""
         line-height: 1.5;
     }
     .stColumn {
-        background-color: white;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        height: 100%;
     }
     .left-column {
         background-color: #e6e6e6;
     }
-    h3, .stTextArea label, .stTextInput label, .stMarkdown p {
+    .right-column {
+        background-color: white;
+    }
+    h3, .stTextArea label, .stTextInput label, .stMarkdown p, .stText p {
         color: #4a4a4a !important;
     }
     .stTextArea textarea, .stTextInput input {
         background-color: white !important;
         color: #4a4a4a !important;
     }
-    .stButton>button {
-        background-color: #90EE90 !important;
+    .stButton > button {
+        background-color: #add8e6 !important;
         color: #4a4a4a !important;
         font-weight: bold !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+        transition: all 0.3s ease !important;
     }
-    .stButton>button:hover {
-        background-color: #7CFC00 !important;
+    .stButton > button:hover {
+        background-color: #90c7e3 !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
     }
-    .column-content {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
+    a {
+        color: #4a4a4a !important;
+    }
+    a:hover {
+        color: #0000FF !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -107,8 +112,8 @@ left_column, right_column = st.columns(2)
 
 # 왼쪽 열: 입력 섹션
 with left_column:
-    st.markdown('<div class="stColumn left-column"><div class="column-content">', unsafe_allow_html=True)
-    st.markdown('<h3>Input</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="stColumn left-column">', unsafe_allow_html=True)
+    st.markdown('<h3>Conversations</h3>', unsafe_allow_html=True)
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide"):
         if user_input:
@@ -116,18 +121,18 @@ with left_column:
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
-                st.markdown('<div class="stColumn"><div class="column-content">', unsafe_allow_html=True)
+                st.markdown('<div class="stColumn right-column">', unsafe_allow_html=True)
                 st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-                st.markdown(f'<p>{guide}</p>', unsafe_allow_html=True)
-                st.markdown('</div></div>', unsafe_allow_html=True)
+                st.markdown(f'<p style="color: #4a4a4a;">{guide}</p>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.warning("Please enter a conversation")
-    st.markdown('</div></div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # 오른쪽 열: 결과 섹션 (초기 상태)
 with right_column:
-    st.markdown('<div class="stColumn"><div class="column-content">', unsafe_allow_html=True)
+    st.markdown('<div class="stColumn right-column">', unsafe_allow_html=True)
     st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
-    st.markdown('<p>The generated guide will appear here after you input a conversation and click \'Generate Guide\'.</p>', unsafe_allow_html=True)
-    st.markdown('</div></div>', unsafe_allow_html=True)
-
+    st.markdown('<p style="color: #4a4a4a;">The generated guide will appear here after you input a conversation and click \'Generate Guide\'.</p>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+    
