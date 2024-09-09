@@ -54,12 +54,20 @@ st.markdown("""
     }
 
     .left-column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
         background-color: #f0f0f0;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
     }
     .right-column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
         background-color: #d0d0d0;
         border-radius: 10px;
         padding: 20px;
@@ -148,8 +156,8 @@ left_column, right_column = st.columns(2)
 
 # 왼쪽 열: 입력 섹션
 with left_column:
-    st.markdown('<div class="left-column">', unsafe_allow_html=True)
-    st.markdown('<h3>Conversation</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="left-column">'
+            '<h3>'Conversation'</h3>', unsafe_allow_html=True)
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide"):
         if user_input:
