@@ -50,7 +50,7 @@ st.markdown("""
         line-height: 1.5;
     }
     .stColumn > div > div {
-        padding-top: 0 !important;
+        padding-top: 0;
     }
 
     .left-column {
@@ -69,19 +69,19 @@ st.markdown("""
     }
 
     .right-column h3 {
-        color: white !important;
+        color: white;
     }
 
     h3, .stTextArea label, .stTextInput label, .stMarkdown p, .stText p {
-        color: #4a4a4a !important;
+        color: #4a4a4a;
     }
     .stTextArea textarea, .stTextInput input {
-        background-color: white !important;
-        color: #4a4a4a !important;
-        width: 100% !important;
+        background-color: white;
+        color: #4a4a4a;
+        width: 100%;
     }
     .stTextArea textarea:hover, .stTextInput input:hover {
-        border-color: #0000FF !important;
+        border-color: #0000FF;
     }
     .stButton > button {
         background-color: #add8e6;
@@ -162,7 +162,7 @@ with left_column:
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide", key="generate_button"):
         if user_input:
-            with st.spinner(f'<p class="dark-text">Generating guide...</p>', unsafe_allow_html=True):
+            with st.spinner('<p class="dark-text">Generating guide...</p>'):
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
