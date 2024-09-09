@@ -86,7 +86,7 @@ st.markdown("""
     .stButton > button {
         background-color: #add8e6 !important;
         color: #4a4a4a !important;
-        font-weight: bold !important;
+        font-weight: bold;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
         transition: all 0.3s ease !important;
     }
