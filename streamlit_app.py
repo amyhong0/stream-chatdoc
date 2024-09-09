@@ -66,6 +66,7 @@ st.markdown("""
         padding: 20px;
         margin: 0px;
         width: 100%;
+        color: #4a4a4a;  /* 추가: 오른쪽 컬럼의 기본 텍스트 색상 설정 */
     }
 
     .right-column h3 {
@@ -102,7 +103,7 @@ st.markdown("""
         color: #0000FF;
     }
     .dark-text {
-        color: #4a4a4a;
+        color: #4a4a4a !important;
     }   
 </style>
 """, unsafe_allow_html=True)
@@ -162,11 +163,11 @@ with left_column:
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide", key="generate_button"):
         if user_input:
-            with st.spinner('<p class="dark-text">Generating guide...</p>'):
+            with st.spinner('Generating guide...'):
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
-                st.markdown('<div class="right-column"><p style="color: white;"><h3>Generated Guide</h3></p>', unsafe_allow_html=True)
+                st.markdown('<div class="right-column"><h3>Generated Guide</h3>', unsafe_allow_html=True)
                 st.markdown(f'<p class="dark-text">{guide}</p>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
