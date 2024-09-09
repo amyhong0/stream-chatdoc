@@ -102,7 +102,7 @@ st.markdown("""
         color: #0000FF;
     }
     .dark-text {
-    color: #4a4a4a;
+        color: #4a4a4a;
     }   
 </style>
 """, unsafe_allow_html=True)
@@ -162,7 +162,7 @@ with left_column:
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide", key="generate_button"):
         if user_input:
-            with st.spinner(f'<p class="dark-text">Generating guide...</p>'):
+            with st.spinner(f'<p class="dark-text">Generating guide...</p>', unsafe_allow_html=True):
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
