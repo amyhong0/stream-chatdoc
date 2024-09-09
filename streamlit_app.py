@@ -58,7 +58,7 @@ st.markdown("""
         justify-content: center;
         align-items: center;
         
-        background-color: ##A4A4A4;
+        background-color: #A4A4A4;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
