@@ -54,26 +54,23 @@ st.markdown("""
     }
 
     .left-column {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
         background-color: #D8D8D8;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
+        width: 100%;
     }
     .right-column {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
         background-color: #6E6E6E;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
+        width: 100%;
     }
 
+    .right-column h3 {
+        color: white !important;
+    }
 
     h3, .stTextArea label, .stTextInput label, .stMarkdown p, .stText p {
         color: #4a4a4a !important;
@@ -81,6 +78,7 @@ st.markdown("""
     .stTextArea textarea, .stTextInput input {
         background-color: white !important;
         color: #4a4a4a !important;
+        width: 100% !important;
     }
     .stTextArea textarea:hover, .stTextInput input:hover {
         border-color: #0000FF !important;
@@ -105,6 +103,7 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
 
 # config.json에서 API URL 및 API KEY 가져오기
 with open('config.json') as config_file:
@@ -158,13 +157,13 @@ left_column, right_column = st.columns(2)
 with left_column:
     st.markdown('<div class="left-column"><h3>Conversation</h3>', unsafe_allow_html=True)
     user_input = st.text_area("Please enter the conversation:", height=300)
-    if st.button("Generate Guide"):
+    if st.button("Generate Guide", key="generate_button"):
         if user_input:
             with st.spinner("Generating guide..."):
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
-                st.markdown('<div class="right-column"><h3>Generated Guide</h3>', unsafe_allow_html=True)
+                st.markdown('<div class="right-column"><p style="color: white;"><h3>Generated Guide</h3></p>', unsafe_allow_html=True)
                 st.markdown(f'<p>{guide}</p>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
