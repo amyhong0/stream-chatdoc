@@ -66,11 +66,18 @@ st.markdown("""
         padding: 20px;
         margin: 0px;
         width: 100%;
-        color: #4a4a4a;  /* 추가: 오른쪽 컬럼의 기본 텍스트 색상 설정 */
     }
 
     .right-column h3 {
         color: white;
+    }
+
+    .right-column p {
+    color: #4a4a4a !important;
+    }
+    
+    .stSpinner > div {
+    color: #4a4a4a !important;
     }
 
     h3, .stTextArea label, .stTextInput label, .stMarkdown p, .stText p {
@@ -168,7 +175,7 @@ with left_column:
             # 오른쪽 열에 결과 표시
             with right_column:
                 st.markdown('<div class="right-column"><h3>Generated Guide</h3>', unsafe_allow_html=True)
-                st.markdown(f'<p class="dark-text">{guide}</p>', unsafe_allow_html=True)
+                st.markdown(f'<p>{guide}</p>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.warning("Please enter a conversation")
