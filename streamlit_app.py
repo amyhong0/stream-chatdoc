@@ -58,7 +58,7 @@ st.markdown("""
         justify-content: center;
         align-items: center;
         
-        background-color: #f0f0f0;
+        background-color: ##BDBDBD;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
@@ -68,7 +68,7 @@ st.markdown("""
         justify-content: center;
         align-items: center;
         
-        background-color: #d0d0d0;
+        background-color: #6E6E6E;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
@@ -164,8 +164,7 @@ with left_column:
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
-                st.markdown('<div class="right-column">', unsafe_allow_html=True)
-                st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
+                st.markdown('<div class="right-column"><h3>Generated Guide</h3>', unsafe_allow_html=True)
                 st.markdown(f'<p>{guide}</p>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
@@ -174,8 +173,7 @@ with left_column:
 
 # 오른쪽 열: 결과 섹션 (초기 상태)
 with right_column:
-    st.markdown('<div class="right-column">', unsafe_allow_html=True)
-    st.markdown('<h3>Generated Guide</h3>', unsafe_allow_html=True)
+    st.markdown('<div class="right-column"><h3>Generated Guide</h3>', unsafe_allow_html=True)
     st.markdown('<p>The generated guide will appear here after you input a conversation and click \'Generate Guide\'.</p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     
