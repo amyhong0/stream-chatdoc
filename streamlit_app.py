@@ -52,16 +52,21 @@ st.markdown("""
     .stColumn > div > div {
         padding-top: 0 !important;
     }
-    .left-column > div {
-        background-color: #e6e6e6;
+
+    .left-column {
+        background-color: #f0f0f0;
         border-radius: 10px;
         padding: 20px;
+        margin: 10px;
     }
-    .right-column > div {
-        background-color: white;
+    .right-column {
+        background-color: #d0d0d0;
         border-radius: 10px;
         padding: 20px;
+        margin: 10px;
     }
+
+
     h3, .stTextArea label, .stTextInput label, .stMarkdown p, .stText p {
         color: #4a4a4a !important;
     }
