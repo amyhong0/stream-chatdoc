@@ -162,12 +162,12 @@ with left_column:
     user_input = st.text_area("Please enter the conversation:", height=300)
     if st.button("Generate Guide", key="generate_button"):
         if user_input:
-            with st.spinner('<p class="dark-text">Generating guide...</p>'):
+            with st.spinner(f'<p class="dark-text">Generating guide...</p>'):
                 guide = get_chat_completions(user_input)
             # 오른쪽 열에 결과 표시
             with right_column:
                 st.markdown('<div class="right-column"><p style="color: white;"><h3>Generated Guide</h3></p>', unsafe_allow_html=True)
-                st.markdown(f'<p>{guide}</p>', unsafe_allow_html=True)
+                st.markdown(f'<p class="dark-text">{guide}</p>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.warning("Please enter a conversation")
