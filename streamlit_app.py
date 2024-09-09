@@ -58,7 +58,7 @@ st.markdown("""
         justify-content: center;
         align-items: center;
         
-        background-color: ##BDBDBD;
+        background-color: ##A4A4A4;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
@@ -68,7 +68,7 @@ st.markdown("""
         justify-content: center;
         align-items: center;
         
-        background-color: #6E6E6E;
+        background-color: #848484;
         border-radius: 10px;
         padding: 20px;
         margin: 10px;
