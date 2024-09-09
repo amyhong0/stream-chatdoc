@@ -57,14 +57,14 @@ st.markdown("""
         background-color: #D8D8D8;
         border-radius: 10px;
         padding: 20px;
-        margin: 10px;
+        margin: 0px;
         width: 100%;
     }
     .right-column {
         background-color: #6E6E6E;
         border-radius: 10px;
         padding: 20px;
-        margin: 10px;
+        margin: 0px;
         width: 100%;
     }
 
