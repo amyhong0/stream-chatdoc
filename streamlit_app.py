@@ -2,6 +2,9 @@ import streamlit as st
 import requests
 import json
 
+# 페이지 설정을 최상단에 배치
+st.set_page_config(page_title="Chat Doc", layout="wide")
+
 # config.json 파일에서 API 키와 Hash값 불러오기
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -40,9 +43,6 @@ def get_chat_completions(messages):
 # 스타일 시트 연결
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# 페이지 설정
-st.set_page_config(page_title="Chat Doc", layout="wide")
 
 # 타이틀과 아이콘
 st.markdown("<h1 class='title'>Chat Doc</h1>", unsafe_allow_html=True)
