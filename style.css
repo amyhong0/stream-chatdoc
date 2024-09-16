@@ -7,22 +7,6 @@ body {
 
 
 
-/* 왼쪽과 오른쪽 섹션의 배경을 각각 스타일링 */
-.block-container {
-    padding-top: 20px;
-}
-
-.section-left {
-    background-color: #3a3a3a;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.section-right {
-    background-color: #2c2c2c;
-    padding: 20px;
-    border-radius: 10px;
-}
 
 /* 타이틀과 섹션 텍스트 스타일링 */
 .title {
@@ -37,15 +21,7 @@ body {
     text-align: center;
 }
 
-.section-title {
-    color: white;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px #000000;
-}
 
-.section-description {
-    color: white;
-}
 
 
 
