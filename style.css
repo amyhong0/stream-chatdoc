@@ -19,6 +19,20 @@ body {
     margin-bottom: 40px;
 }
 
+/* 섹션 배경 색상 설정 */
+.section-left {
+    background-color: #3a3a3a;  /* 회색 */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.section-right {
+    background-color: #2c2c2c;  /* 짙은 회색 */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
 /* 섹션 타이틀 */
 .section-title {
     font-size: 24px;
