@@ -55,6 +55,7 @@ col1, col2 = st.columns(2)
 
 # 왼쪽 섹션 (Conversation 입력)
 with col1:
+    st.markdown("<div class='section-left'>", unsafe_allow_html=True)
     st.markdown("<h2 class='section-title'>Conversation</h2>", unsafe_allow_html=True)
     st.markdown("<p class='section-description'>Please enter the conversation:</p>", unsafe_allow_html=True)
     
@@ -63,12 +64,16 @@ with col1:
     if st.button("Generate Guide"):
         # LaaS API에 메시지를 보냄
         generated_guide = get_chat_completions(conversation_input)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # 오른쪽 섹션 (Generated Guide 표시)
 with col2:
+    st.markdown("<div class='section-right'>", unsafe_allow_html=True)
     st.markdown("<h2 class='section-title'>Generated Guide</h2>", unsafe_allow_html=True)
     st.markdown("<p class='section-description'>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>", unsafe_allow_html=True)
     
     # 챗봇 응답 출력
     if 'generated_guide' in locals():
         st.text_area("Generated Guide", value=generated_guide, height=300)
+    st.markdown("</div>", unsafe_allow_html=True)
+
