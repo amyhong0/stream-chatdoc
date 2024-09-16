@@ -52,53 +52,61 @@ st.markdown("<p class='description'>I'll create a work guide to help you stay on
 
 
 
-# CSS 스타일을 페이지 내에 직접 삽입
+# 페이지 스타일 정의 (CSS로 각 섹션의 스타일 적용)
 st.markdown(
     """
     <style>
-    /* 왼쪽 섹션의 스타일 */
-    .left-section {
-        background-color: #3a3a3a;
+    .main-container {
+        background-color: black;
+    }
+    .left-section, .right-section {
         padding: 20px;
         border-radius: 10px;
         color: white;
     }
-    /* 오른쪽 섹션의 스타일 */
+    .left-section {
+        background-color: #3a3a3a;
+    }
     .right-section {
         background-color: #2c2c2c;
-        padding: 20px;
-        border-radius: 10px;
+    }
+    h2 {
         color: white;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px #000000;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# 두 개의 섹션 레이아웃 설정 (두 컬럼으로 나눔)
+# 두 개의 섹션을 만들기 위한 레이아웃 구성
 col1, col2 = st.columns(2)
 
 # 왼쪽 섹션 (Conversation 입력)
 with col1:
-    st.markdown("<div class='left-section'>", unsafe_allow_html=True)
-    st.markdown("<h2>Conversation</h2>", unsafe_allow_html=True)
-    st.markdown("<p>Please enter the conversation:</p>", unsafe_allow_html=True)
-    
-    # 텍스트 입력 및 버튼 생성
-    conversation_input = st.text_area("Enter your conversation here", height=300)
-    if st.button("Generate Guide"):
-        generated_guide = get_chat_completions(conversation_input)
-    st.markdown("</div>", unsafe_allow_html=True)
+    with st.container():  # Streamlit 위젯을 감쌀 수 있는 container 사용
+        st.markdown("<div class='left-section'>", unsafe_allow_html=True)
+        st.markdown("<h2>Conversation</h2>", unsafe_allow_html=True)
+        st.markdown("<p>Please enter the conversation:</p>", unsafe_allow_html=True)
+
+        # 텍스트 입력 및 버튼 생성
+        conversation_input = st.text_area("Enter your conversation here", height=300)
+        if st.button("Generate Guide"):
+            generated_guide = get_chat_completions(conversation_input)
+        st.markdown("</div>", unsafe_allow_html=True)
 
 # 오른쪽 섹션 (Generated Guide 표시)
 with col2:
-    st.markdown("<div class='right-section'>", unsafe_allow_html=True)
-    st.markdown("<h2>Generated Guide</h2>", unsafe_allow_html=True)
-    st.markdown("<p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>", unsafe_allow_html=True)
-    
-    # 챗봇 응답 출력
-    if 'generated_guide' in locals():
-        st.text_area("Generated Guide", value=generated_guide, height=300)
-    st.markdown("</div>", unsafe_allow_html=True)
+    with st.container():  # Streamlit 위젯을 감쌀 수 있는 container 사용
+        st.markdown("<div class='right-section'>", unsafe_allow_html=True)
+        st.markdown("<h2>Generated Guide</h2>", unsafe_allow_html=True)
+        st.markdown("<p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>", unsafe_allow_html=True)
+
+        # 챗봇 응답 출력
+        if 'generated_guide' in locals():
+            st.text_area("Generated Guide", value=generated_guide, height=300)
+        st.markdown("</div>", unsafe_allow_html=True)
+
 
 
