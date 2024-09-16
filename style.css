@@ -1,0 +1,48 @@
+/* 전체 레이아웃 설정 */
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* 타이틀과 설명 */
+.title {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.description {
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+}
+
+/* 섹션 타이틀 */
+.section-title {
+    font-size: 24px;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px #000000;
+}
+
+.section-description {
+    font-size: 16px;
+    color: #CCCCCC;
+    margin-bottom: 20px;
+}
+
+/* 텍스트 입력과 결과 */
+textarea {
+    background-color: #333333;
+    color: white;
+    border: 1px solid #555555;
+}
+
+/* 버튼 */
+button {
+    background-color: #555555;
+    color: white;
+    font-weight: bold;
+}
