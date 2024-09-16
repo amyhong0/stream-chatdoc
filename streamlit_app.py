@@ -50,16 +50,39 @@ st.markdown("<p class='description'>I'll create a work guide to help you stay on
             "Please enter your Messenger conversations and I'll organize them into a task guide.</p>",
             unsafe_allow_html=True)
 
-# 2개의 섹션 레이아웃 정의
-col1, col2 = st.columns(2)
 
+
+# CSS 스타일을 페이지 내에 직접 삽입
+st.markdown(
+    """
+    <style>
+    /* 왼쪽 섹션의 스타일 */
+    .left-section {
+        background-color: #3a3a3a;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+    }
+    /* 오른쪽 섹션의 스타일 */
+    .right-section {
+        background-color: #2c2c2c;
+        padding: 20px;
+        border-radius: 10px;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# 두 개의 섹션 레이아웃 설정 (두 컬럼으로 나눔)
+col1, col2 = st.columns(2)
 
 # 왼쪽 섹션 (Conversation 입력)
 with col1:
-    # 섹션을 스타일링할 수 있도록 'st.markdown()'에 div 추가
-    st.markdown("<div class='section-left'>", unsafe_allow_html=True)
-    st.markdown("<h2 class='section-title'>Conversation</h2>", unsafe_allow_html=True)
-    st.markdown("<p class='section-description'>Please enter the conversation:</p>", unsafe_allow_html=True)
+    st.markdown("<div class='left-section'>", unsafe_allow_html=True)
+    st.markdown("<h2>Conversation</h2>", unsafe_allow_html=True)
+    st.markdown("<p>Please enter the conversation:</p>", unsafe_allow_html=True)
     
     # 텍스트 입력 및 버튼 생성
     conversation_input = st.text_area("Enter your conversation here", height=300)
@@ -69,14 +92,13 @@ with col1:
 
 # 오른쪽 섹션 (Generated Guide 표시)
 with col2:
-    # 섹션을 스타일링할 수 있도록 'st.markdown()'에 div 추가
-    st.markdown("<div class='section-right'>", unsafe_allow_html=True)
-    st.markdown("<h2 class='section-title'>Generated Guide</h2>", unsafe_allow_html=True)
-    st.markdown("<p class='section-description'>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>", unsafe_allow_html=True)
+    st.markdown("<div class='right-section'>", unsafe_allow_html=True)
+    st.markdown("<h2>Generated Guide</h2>", unsafe_allow_html=True)
+    st.markdown("<p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>", unsafe_allow_html=True)
     
+    # 챗봇 응답 출력
     if 'generated_guide' in locals():
         st.text_area("Generated Guide", value=generated_guide, height=300)
     st.markdown("</div>", unsafe_allow_html=True)
-
 
 
