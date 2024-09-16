@@ -27,7 +27,7 @@ with col1:
     conversation_input = st.text_area("Enter your conversation here", height=300)
     if st.button("Generate Guide"):
         # LaaS API에 메시지를 보냄
-        api_url = "https://api-laas.wanted.co.kr/api/preset/v2/chat/completions/"  # 실제 LaaS API 엔드포인트로 교체
+        api_url = "https://api-laas.wanted.co.kr/api/preset/v2/chat/completions/cf2cf3b1448842d68f0496bca779384e6bb44a04e45f92c5611645107bee1ae5"  # 실제 LaaS API 엔드포인트로 교체
         headers = {"Content-Type": "application/json"}
         data = {"message": conversation_input}
         
