@@ -5,47 +5,49 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* 타이틀과 설명 */
-.title {
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px #000000;
+
+
+/* 왼쪽과 오른쪽 섹션의 배경을 각각 스타일링 */
+.block-container {
+    padding-top: 20px;
 }
 
-.description {
-    text-align: center;
-    color: white;
-    margin-bottom: 40px;
-}
-
-/* 섹션 배경 색상 설정 */
 .section-left {
-    background-color: #3a3a3a;  /* 회색 */
+    background-color: #3a3a3a;
     padding: 20px;
     border-radius: 10px;
 }
 
 .section-right {
-    background-color: #2c2c2c;  /* 짙은 회색 */
+    background-color: #2c2c2c;
     padding: 20px;
     border-radius: 10px;
 }
 
+/* 타이틀과 섹션 텍스트 스타일링 */
+.title {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+}
 
-/* 섹션 타이틀 */
+.description {
+    color: white;
+    text-align: center;
+}
+
 .section-title {
-    font-size: 24px;
-    color: #FFFFFF;
+    color: white;
     font-weight: bold;
     text-shadow: 1px 1px 3px #000000;
 }
 
 .section-description {
-    font-size: 16px;
-    color: #CCCCCC;
-    margin-bottom: 20px;
+    color: white;
 }
+
+
 
 /* 텍스트 입력과 결과 */
 textarea {
