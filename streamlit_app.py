@@ -2,6 +2,41 @@ import streamlit as st
 import requests
 import json
 
+# config.json 파일에서 API 키와 Hash값 불러오기
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+API_KEY = config['API_KEY']
+LAAS_PRESET_HASH = config['LAAS_PRESET_HASH']
+
+# LaaS Preset API 호출 함수
+def get_chat_completions(messages):
+    try:
+        url = 'https://api-laas.wanted.co.kr/api/preset/v2/chat/completions'
+        headers = {
+            "project": "PROMPTHON_PRJ_385",
+            "apiKey": API_KEY,
+            "Content-Type": "application/json; charset=utf-8"
+        }
+        data = {
+            "hash": LAAS_PRESET_HASH,
+            "messages": [{"role": "user", "content": messages}],
+            "params": {"task": "guide_generation", "contents": " "}
+        }
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+
+        if response.status_code == 200:
+            response_data = response.json()
+            choices = response_data.get("choices", [])
+            if choices:
+                return choices[0]["message"]["content"]
+            else:
+                return "No result found."
+        else:
+            return f"LaaS API 호출 오류: {response.status_code}, {response.text}"
+    except Exception as e:
+        return f"LaaS API 호출 중 예외 발생: {e}"
+
 # 스타일 시트 연결
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -27,16 +62,7 @@ with col1:
     conversation_input = st.text_area("Enter your conversation here", height=300)
     if st.button("Generate Guide"):
         # LaaS API에 메시지를 보냄
-        api_url = "https://api-laas.wanted.co.kr/api/preset/v2/chat/completions/cf2cf3b1448842d68f0496bca779384e6bb44a04e45f92c5611645107bee1ae5"  # 실제 LaaS API 엔드포인트로 교체
-        headers = {"Content-Type": "application/json"}
-        data = {"message": conversation_input}
-        
-        response = requests.post(api_url, headers=headers, data=json.dumps(data))
-        
-        if response.status_code == 200:
-            generated_guide = response.json().get("assistant", "Error: No response from the bot")
-        else:
-            generated_guide = "Error: Failed to connect to the bot."
+        generated_guide = get_chat_completions(conversation_input)
 
 # 오른쪽 섹션 (Generated Guide 표시)
 with col2:
