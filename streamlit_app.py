@@ -87,7 +87,8 @@ with left_column:
         <h2>Conversation</h2>
         <p>Please enter the conversation:</p>
     """, unsafe_allow_html=True)
-    conversation_input = st.text_area("", height=200)
+    st.markdown(<div class="left-section">
+        conversation_input = st.text_area("", height=200), unsafe_allow_html=True)
 
     # Generate Guide 버튼: 입력창 아래에 배치
     if st.button('Generate Guide', key="generate_button"):
