@@ -42,12 +42,17 @@ def load_html(file_name):
         html_content = f.read()
     return html_content
 
-# Streamlit에서 HTML 파일 렌더링 (st.markdown 대신 st.components.v1.html 사용)
+# Streamlit에서 HTML 파일 렌더링 (st.components.v1.html 사용)
 components.html(load_html('layout.html'), height=600)
 
 # Streamlit 위젯 추가 (텍스트 입력 및 버튼)
+st.write("")  # 위젯이 HTML에 포함되는 느낌을 주기 위해 공간 확보
+
+# Conversation 섹션에 입력 필드 추가
 st.write("### Conversation Input")
 conversation_input = st.text_area("Enter your conversation here", height=200)
+
+# Generate Guide 버튼 및 결과 표시
 if st.button('Generate Guide'):
     if conversation_input:
         generated_guide = get_chat_completions(conversation_input)
