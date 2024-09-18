@@ -86,7 +86,6 @@ with left_column:
     <div class="left-section">
         <h2>Conversation</h2>
         <p>Please enter the conversation:</p>
-    </div>
     """, unsafe_allow_html=True)
     conversation_input = st.text_area("", height=200)
 
@@ -95,6 +94,7 @@ with left_column:
         if conversation_input:
             generated_guide = get_chat_completions(conversation_input)
             right_column.text_area("Generated Guide", value=generated_guide, height=200)
+    st.markdown("</div", unsafe_allow_html=True)
 
 # 오른쪽 섹션: Generated Guide
 with right_column:
