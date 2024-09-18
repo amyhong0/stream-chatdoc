@@ -43,18 +43,23 @@ def load_html(file_name):
     return html_content
 
 # Streamlit에서 HTML 파일 렌더링 (st.components.v1.html 사용)
-components.html(load_html('layout.html'), height=600)
+components.html(load_html('layout.html'), height=200)  # 타이틀 섹션만 렌더링
 
-# Streamlit 위젯 추가 (텍스트 입력 및 버튼)
-st.write("")  # 위젯이 HTML에 포함되는 느낌을 주기 위해 공간 확보
+# Streamlit 레이아웃 설정 (두 개의 컬럼을 사용하여 좌우 섹션 나누기)
+left_column, right_column = st.columns(2)
 
-# Conversation 섹션에 입력 필드 추가
-st.write("### Conversation Input")
-conversation_input = st.text_area("Enter your conversation here", height=200)
+# 왼쪽 섹션: Conversation 입력
+with left_column:
+    st.markdown("## Conversation")
+    conversation_input = st.text_area("Please enter the conversation:", height=200)
 
-# Generate Guide 버튼 및 결과 표시
-if st.button('Generate Guide'):
-    if conversation_input:
-        generated_guide = get_chat_completions(conversation_input)
-        st.write("### Generated Guide")
-        st.text_area("Generated Guide", value=generated_guide, height=200)
+    # Generate Guide 버튼
+    if st.button('Generate Guide', key="generate_button"):
+        if conversation_input:
+            generated_guide = get_chat_completions(conversation_input)
+            right_column.text_area("Generated Guide", value=generated_guide, height=200)
+
+# 오른쪽 섹션: Generated Guide
+with right_column:
+    st.markdown("## Generated Guide")
+    st.write("The generated guide will appear here after you input a conversation and click 'Generate Guide'.")
