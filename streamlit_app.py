@@ -39,6 +39,15 @@ def get_chat_completions(messages):
 # CSS 스타일 적용
 st.markdown("""
     <style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+    .title-section {
+        text-align: center;
+        padding: 20px;
+    }
     .left-section, .right-section {
         background-color: #333333;
         padding: 20px;
@@ -52,12 +61,20 @@ st.markdown("""
     .right-section {
         background-color: #333333;
     }
-    h2 {
+    h1, h2 {
         color: white;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
     </style>
+""", unsafe_allow_html=True)
+
+# 화면 중앙에 타이틀 표시
+st.markdown("""
+    <div class="title-section">
+        <h1>Chat Doc</h1>
+        <p>I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
+    </div>
 """, unsafe_allow_html=True)
 
 # Streamlit 레이아웃 설정 (두 개의 컬럼을 사용하여 좌우 섹션 나누기)
@@ -73,6 +90,12 @@ with left_column:
     """, unsafe_allow_html=True)
     conversation_input = st.text_area("", height=200)
 
+    # Generate Guide 버튼: 입력창 아래에 배치
+    if st.button('Generate Guide', key="generate_button"):
+        if conversation_input:
+            generated_guide = get_chat_completions(conversation_input)
+            right_column.text_area("Generated Guide", value=generated_guide, height=200)
+
 # 오른쪽 섹션: Generated Guide
 with right_column:
     st.markdown("""
@@ -81,9 +104,3 @@ with right_column:
         <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
     </div>
     """, unsafe_allow_html=True)
-
-    # Generate Guide 버튼
-    if st.button('Generate Guide'):
-        if conversation_input:
-            generated_guide = get_chat_completions(conversation_input)
-            st.text_area("Generated Guide", value=generated_guide, height=200)
