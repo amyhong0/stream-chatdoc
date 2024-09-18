@@ -44,9 +44,9 @@ def load_html(file_name):
 # Streamlit에서 HTML 파일 렌더링
 st.markdown(load_html('layout.html'), unsafe_allow_html=True)
 
-# Streamlit에서 버튼이 클릭되었을 때의 동작
+# Streamlit 위젯 추가
+conversation_input = st.text_area("Enter your conversation here", height=200)
 if st.button('Generate Guide'):
-    conversation_input = st.text_area("Enter your conversation here", height=300)
     if conversation_input:
         generated_guide = get_chat_completions(conversation_input)
-        st.text_area("Generated Guide", value=generated_guide, height=300)
+        st.text_area("Generated Guide", value=generated_guide, height=200)
