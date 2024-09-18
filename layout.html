@@ -14,11 +14,17 @@
             width: 100%;
             padding: 20px;
         }
+        .title-section {
+            text-align: center;
+            padding: 20px;
+        }
         .left-section, .right-section {
             background-color: #3a3a3a;
             padding: 20px;
             border-radius: 10px;
             margin: 10px;
+            float: left;
+            width: 45%;
         }
         .right-section {
             background-color: #2c2c2c;
@@ -31,27 +37,29 @@
         p {
             color: white;
         }
-        .section {
-            width: 45%;
-            float: left;
-            margin-right: 5%;
+        .clearfix {
+            clear: both;
         }
     </style>
 </head>
 <body>
     <div class="main-container">
-        <div class="section left-section">
-            <h2>Conversation</h2>
-            <p>Please enter the conversation:</p>
-            <textarea id="conversation-input" rows="10" style="width:100%;"></textarea>
-            <button id="generate-btn" style="width:100%;">Generate Guide</button>
+        <div class="title-section">
+            <h1>Chat Doc</h1>
+            <p>I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
         </div>
 
-        <div class="section right-section">
+        <div class="left-section">
+            <h2>Conversation</h2>
+            <p>Please enter the conversation:</p>
+        </div>
+
+        <div class="right-section">
             <h2>Generated Guide</h2>
             <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
-            <textarea id="generated-guide" rows="10" style="width:100%;" readonly></textarea>
         </div>
+
+        <div class="clearfix"></div>
     </div>
 </body>
 </html>
