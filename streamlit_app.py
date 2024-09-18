@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import json
+import streamlit.components.v1 as components  # HTML을 렌더링하기 위한 모듈
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
@@ -41,12 +42,14 @@ def load_html(file_name):
         html_content = f.read()
     return html_content
 
-# Streamlit에서 HTML 파일 렌더링
-st.markdown(load_html('layout.html'), unsafe_allow_html=True)
+# Streamlit에서 HTML 파일 렌더링 (st.markdown 대신 st.components.v1.html 사용)
+components.html(load_html('layout.html'), height=600)
 
-# Streamlit 위젯 추가
+# Streamlit 위젯 추가 (텍스트 입력 및 버튼)
+st.write("### Conversation Input")
 conversation_input = st.text_area("Enter your conversation here", height=200)
 if st.button('Generate Guide'):
     if conversation_input:
         generated_guide = get_chat_completions(conversation_input)
+        st.write("### Generated Guide")
         st.text_area("Generated Guide", value=generated_guide, height=200)
