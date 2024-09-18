@@ -87,14 +87,13 @@ with left_column:
         <h2>Conversation</h2>
         <p>Please enter the conversation:</p>
     """, unsafe_allow_html=True)
-    st.markdown("""<div class="left-section",
-    conversation_input = st.text_area("", height=200)""", unsafe_allow_html=True)
+        conversation_input = st.text_area("", height=200)
 
     # Generate Guide 버튼: 입력창 아래에 배치
-    if st.button('Generate Guide', key="generate_button"):
-        if conversation_input:
-            generated_guide = get_chat_completions(conversation_input)
-            right_column.text_area("Generated Guide", value=generated_guide, height=200)
+        if st.button('Generate Guide', key="generate_button"):
+            if conversation_input:
+                generated_guide = get_chat_completions(conversation_input)
+                right_column.text_area("Generated Guide", value=generated_guide, height=200)
     st.markdown("</div", unsafe_allow_html=True)
 
 # 오른쪽 섹션: Generated Guide
