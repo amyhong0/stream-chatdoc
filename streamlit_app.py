@@ -1,7 +1,6 @@
 import streamlit as st
 import requests
 import json
-import streamlit.components.v1 as components
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
@@ -93,14 +92,14 @@ with left_column:
     if st.button('Generate Guide', key="generate_button"):
         if conversation_input:
             generated_guide = get_chat_completions(conversation_input)
-            right_column.text_area("Generated Guide", value=generated_guide, height=200)
-    st.markdown("</div", unsafe_allow_html=True)
+            with right_column:
+                # 오른쪽 섹션에 결과 표시
+                st.markdown("""
+                <div class="right-section">
+                    <h2>Generated Guide</h2>
+                    <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
+                """, unsafe_allow_html=True)
+                st.text_area("", value=generated_guide, height=200)
+                st.markdown("</div>", unsafe_allow_html=True)
 
-# 오른쪽 섹션: Generated Guide
-with right_column:
-    st.markdown("""
-    <div class="right-section">
-        <h2>Generated Guide</h2>
-        <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
