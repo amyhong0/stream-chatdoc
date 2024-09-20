@@ -92,14 +92,14 @@ with left_column:
     if st.button('Generate Guide', key="generate_button"):
         if conversation_input:
             generated_guide = get_chat_completions(conversation_input)
-            # 오른쪽 섹션에 결과 표시
+            # 오른쪽 섹션에 마크다운 형식으로 결과 표시
             with right_column:
                 st.markdown("""
                 <div class="right-section">
                     <h2>Generated Guide</h2>
                     <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
                 """, unsafe_allow_html=True)
-                st.text_area("", value=generated_guide, height=200)
+                st.markdown(generated_guide, unsafe_allow_html=True)
                 st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
