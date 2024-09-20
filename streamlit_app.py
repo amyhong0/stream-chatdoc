@@ -49,13 +49,17 @@ st.markdown("""
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        gap: 10px;
     }
     .title-section h1 {
         font-size: 3rem;
         color: white;
         font-weight: bold;
-        text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);  /* 더 두꺼운 그림자 효과 */
+        text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
+    }
+    .title-section img {
+        width: 60px;
+        height: 60px;
     }
     .left-section, .right-section {
         background-color: #333333;
@@ -100,20 +104,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 화면 중앙에 타이틀 및 아이콘 표시
-col1, col2 = st.columns([0.2, 1])
-
-with col1:
-    st.image("chatdoc_icon.png", width=60)  # 아이콘 크기 설정
-
-with col2:
-    st.markdown("""
+# 메인 타이틀과 아이콘 함께 표시
+st.markdown("""
     <div class="title-section">
+        <img src="chatdoc_icon.png" alt="Chat Doc Icon">
         <h1>Chat Doc</h1>
     </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("""
     <p style="text-align: center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
 
@@ -153,3 +149,4 @@ if 'generated_guide' not in locals():
             <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
         </div>
         """, unsafe_allow_html=True)
+
