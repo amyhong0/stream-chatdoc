@@ -92,8 +92,8 @@ with left_column:
     if st.button('Generate Guide', key="generate_button"):
         if conversation_input:
             generated_guide = get_chat_completions(conversation_input)
+            # 오른쪽 섹션에 결과 표시
             with right_column:
-                # 오른쪽 섹션에 결과 표시
                 st.markdown("""
                 <div class="right-section">
                     <h2>Generated Guide</h2>
@@ -101,5 +101,14 @@ with left_column:
                 """, unsafe_allow_html=True)
                 st.text_area("", value=generated_guide, height=200)
                 st.markdown("</div>", unsafe_allow_html=True)
-
     st.markdown("</div>", unsafe_allow_html=True)
+
+# 오른쪽 섹션: Generated Guide - 기본 화면에서 비어 있을 때 표시
+if 'generated_guide' not in locals():
+    with right_column:
+        st.markdown("""
+        <div class="right-section">
+            <h2>Generated Guide</h2>
+            <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
+        </div>
+        """, unsafe_allow_html=True)
