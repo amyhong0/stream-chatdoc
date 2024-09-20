@@ -68,7 +68,7 @@ st.markdown("""
     .stColumn > div {
         flex: 1;
         padding: 10px;
-        max-width: 100%;  /* 최대 너비를 100%로 설정 */
+        max-width: 150%;  /* 최대 너비를 100%로 설정 */
     }
     .stColumn {
         display: flex;
