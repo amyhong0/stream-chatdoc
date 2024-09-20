@@ -53,6 +53,9 @@ st.markdown("""
         border-radius: 10px;
         margin: 10px;
         color: white;
+        width: 100%;  /* 섹션의 폭을 100%로 설정 */
+        max-width: 900px;  /* 최대 폭 설정 */
+        flex-grow: 1;
     }
     .left-section {
         background-color: #4f4f4f;
@@ -64,6 +67,11 @@ st.markdown("""
         color: white;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .stColumn {
+        display: flex;
+        justify-content: space-around;  /* 섹션들이 창 크기에 맞게 유연하게 정렬됨 */
+        align-items: flex-start;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -77,7 +85,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Streamlit 레이아웃 설정 (두 개의 컬럼을 사용하여 좌우 섹션 나누기)
-left_column, right_column = st.columns(2)
+left_column, right_column = st.columns(2, gap="large")
 
 # 왼쪽 섹션: Conversation 입력
 with left_column:
