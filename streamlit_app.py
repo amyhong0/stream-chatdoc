@@ -46,6 +46,14 @@ st.markdown("""
     .title-section {
         text-align: center;
         padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    .title-section img {
+        width: 50px;
+        height: 50px;
     }
     .left-section, .right-section {
         background-color: #333333;
@@ -68,7 +76,7 @@ st.markdown("""
     .stColumn > div {
         flex: 1;
         padding: 10px;
-        max-width: 150%;  /* 최대 너비를 100%로 설정 */
+        max-width: 100%;  /* 최대 너비를 100%로 설정 */
     }
     .stColumn {
         display: flex;
@@ -76,20 +84,26 @@ st.markdown("""
         align-items: flex-start;
         gap: 20px;  /* 섹션 간의 간격 추가 */
     }
-    @media (min-width: 1200px) {
+    @media (min-width: 1000px) {
         .stColumn > div {
-            max-width: 48%;  /* 큰 화면에서 각 섹션이 화면의 48%를 차지 */
+            max-width: 70%;  /* 각 섹션이 화면의 70%까지 확장 */
+        }
+    }
+    @media (min-width: 1400px) {
+        .stColumn > div {
+            max-width: 45%;  /* 큰 화면에서 각 섹션이 화면의 45%를 차지 */
         }
     }
     </style>
 """, unsafe_allow_html=True)
 
-# 화면 중앙에 타이틀 표시
+# 화면 중앙에 타이틀 및 아이콘 표시
 st.markdown("""
     <div class="title-section">
+        <img src="chatdoc_icon.png" alt="Chat Doc Icon">
         <h1>Chat Doc</h1>
-        <p>I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
     </div>
+    <p style="text-align: center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
 
 # Streamlit 레이아웃 설정 (두 개의 컬럼을 사용하여 좌우 섹션 나누기)
