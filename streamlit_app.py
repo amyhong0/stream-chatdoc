@@ -51,9 +51,11 @@ st.markdown("""
         align-items: center;
         gap: 20px;
     }
-    .title-section img {
-        width: 50px;
-        height: 50px;
+    .title-section h1 {
+        font-size: 3rem;
+        color: white;
+        font-weight: bold;
+        text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);  /* 더 두꺼운 그림자 효과 */
     }
     .left-section, .right-section {
         background-color: #333333;
@@ -68,7 +70,8 @@ st.markdown("""
     .right-section {
         background-color: #333333;
     }
-    h1, h2 {
+    h2 {
+        font-size: 1.5rem;
         color: white;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -76,33 +79,41 @@ st.markdown("""
     .stColumn > div {
         flex: 1;
         padding: 10px;
-        max-width: 100%;  /* 최대 너비를 100%로 설정 */
+        max-width: 100%;
     }
     .stColumn {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 20px;  /* 섹션 간의 간격 추가 */
+        gap: 20px;
     }
     @media (min-width: 1000px) {
         .stColumn > div {
-            max-width: 70%;  /* 각 섹션이 화면의 70%까지 확장 */
+            max-width: 70%;
         }
     }
     @media (min-width: 1400px) {
         .stColumn > div {
-            max-width: 45%;  /* 큰 화면에서 각 섹션이 화면의 45%를 차지 */
+            max-width: 45%;
         }
     }
     </style>
 """, unsafe_allow_html=True)
 
 # 화면 중앙에 타이틀 및 아이콘 표시
-st.markdown("""
+col1, col2 = st.columns([0.2, 1])
+
+with col1:
+    st.image("chatdoc_icon.png", width=60)  # 아이콘 크기 설정
+
+with col2:
+    st.markdown("""
     <div class="title-section">
-        <img src="chatdoc_icon.png" alt="Chat Doc Icon">
         <h1>Chat Doc</h1>
     </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("""
     <p style="text-align: center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
 
