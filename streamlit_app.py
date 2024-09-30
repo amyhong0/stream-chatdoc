@@ -1,10 +1,6 @@
 import streamlit as st
-import json
 import requests
-from PIL import Image
-import base64
-from io import BytesIO
-from fpdf import FPDF
+import json
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
@@ -37,8 +33,7 @@ def get_chat_completions(messages):
         else:
             return f"LaaS API 호출 오류: {response.status_code}, {response.text}"
     except Exception as e:
-        st.error(f"LaaS API 호출 중 예외 발생: {e}")
-        raise e
+        return f"LaaS API 호출 중 예외 발생: {e}"
 
 # CSS 스타일 적용
 st.markdown("""
@@ -49,18 +44,22 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
     .title-section {
+        text-align: center;
+        padding: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 10px;
-        text-align: center;
-        padding: 20px;
     }
     .title-section h1 {
         font-size: 3rem;
         color: white;
         font-weight: bold;
         text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
+    }
+    .title-section img {
+        width: 60px;
+        height: 60px;
     }
     .left-section, .right-section {
         background-color: #333333;
@@ -81,26 +80,37 @@ st.markdown("""
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
+    .stColumn > div {
+        flex: 1;
+        padding: 10px;
+        max-width: 100%;
+    }
+    .stColumn {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    @media (min-width: 1000px) {
+        .stColumn > div {
+            max-width: 70%;
+        }
+    }
+    @media (min-width: 1400px) {
+        .stColumn > div {
+            max-width: 45%;
+        }
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # 메인 타이틀과 아이콘 함께 표시
-icon_image = Image.open('chatdoc_icon.png')
-
-# 아이콘을 base64로 인코딩하여 HTML에 삽입
-buffered = BytesIO()
-icon_image.save(buffered, format="PNG")
-icon_base64 = base64.b64encode(buffered.getvalue()).decode()
-
-st.markdown(f"""
-<div class="title-section">
-    <img src="data:image/png;base64,{icon_base64}" alt="Chat Doc Icon" style="width:60px;height:60px;">
-    <h1>Chat Doc</h1>
-</div>
-""", unsafe_allow_html=True)
-
 st.markdown("""
-<p style="text-align:center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
+    <div class="title-section">
+        <img src="chatdoc_icon.png" alt="Chat Doc Icon">
+        <h1>Chat Doc</h1>
+    </div>
+    <p style="text-align: center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
 
 # Streamlit 레이아웃 설정 (두 개의 컬럼을 사용하여 좌우 섹션 나누기)
@@ -118,19 +128,16 @@ with left_column:
     # Generate Guide 버튼: 입력창 아래에 배치
     if st.button('Generate Guide', key="generate_button"):
         if conversation_input:
-            try:
-                generated_guide = get_chat_completions(conversation_input)
-                # 오른쪽 섹션에 마크다운 형식으로 결과 표시
-                with right_column:
-                    st.markdown("""
-                    <div class="right-section">
-                        <h2>Generated Guide</h2>
-                        <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
-                    """, unsafe_allow_html=True)
-                    st.markdown(generated_guide, unsafe_allow_html=True)
-                    st.markdown("</div>", unsafe_allow_html=True)
-            except Exception as e:
-                st.error(f"Error generating guide: {e}")
+            generated_guide = get_chat_completions(conversation_input)
+            # 오른쪽 섹션에 마크다운 형식으로 결과 표시
+            with right_column:
+                st.markdown("""
+                <div class="right-section">
+                    <h2>Generated Guide</h2>
+                    <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
+                """, unsafe_allow_html=True)
+                st.markdown(generated_guide, unsafe_allow_html=True)
+                st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 # 오른쪽 섹션: Generated Guide - 기본 화면에서 비어 있을 때 표시
@@ -141,25 +148,4 @@ if 'generated_guide' not in locals():
             <h2>Generated Guide</h2>
             <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
         </div>
-""", unsafe_allow_html=True)
-
-# PDF 생성 함수
-def create_pdf(text):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, text)
-    return pdf.output(dest='S').encode('latin1')
-
-# PDF 다운로드 함수
-def download_pdf(pdf_content, filename):
-    b64 = base64.b64encode(pdf_content).decode()
-    href = f'<a href="data:application/octet-stream;base64,{b64}" download="{filename}">Download PDF</a>'
-    st.markdown(href, unsafe_allow_html=True)
-
-st.title("PDF 생성 예제")
-
-if st.button("PDF 생성"):
-    if 'generated_guide' in locals():
-        pdf_content = create_pdf(generated_guide)
-        download_pdf(pdf_content, "generated_guide.pdf")
+        """, unsafe_allow_html=True)
