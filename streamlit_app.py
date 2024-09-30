@@ -105,13 +105,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 메인 타이틀과 아이콘 함께 표시
-icon_image = Image.open('chatdoc_icon.png')
 
 # HTML 블록으로 아이콘과 타이틀을 중앙 정렬
 st.markdown(f"""
     <div class="title-section">
-      <img src="data:image/png;base64,{st.image(icon_image, use_column_width=False)}" alt="Chat Doc Icon">
+      <img src="data:image/png;base64,{Image.open(chatdoc_icon.png)}" alt="Chat Doc Icon">
       <h1>Chat Doc</h1>
     </div>
 """, unsafe_allow_html=True)
