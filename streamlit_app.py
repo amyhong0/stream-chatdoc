@@ -108,20 +108,17 @@ st.markdown("""
 # 메인 타이틀과 아이콘 함께 표시
 icon_image = Image.open('chatdoc_icon.png')
 
-# 아이콘과 타이틀을 중앙 정렬된 HTML 블록으로 표시
-st.markdown("""
-<div class="title-section">
-""", unsafe_allow_html=True)
-
-# Streamlit의 st.image()를 사용하여 아이콘을 표시하고 HTML로 타이틀을 표시
-col1, col2 = st.columns([1, 8])
-with col1:
-    st.image(icon_image, width=60)
+# 중앙에 아이콘과 타이틀을 배치하기 위해 빈 열 추가
+col1, col2, col3 = st.columns([1, 6, 1])
 with col2:
-    st.markdown("<h1 style='text-align:left;'>Chat Doc</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    <div class="title-section">
+      <img src="data:image/png;base64,{icon_image}" alt="Chat Doc Icon">
+      <h1>Chat Doc</h1>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("""
-</div>
 <p style="text-align:center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
 
