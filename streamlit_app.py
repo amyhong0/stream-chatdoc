@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import json
 from PIL import Image
+import base64
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
@@ -58,10 +59,6 @@ st.markdown("""
         font-weight: bold;
         text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
     }
-    .title-section img {
-        width: 60px;
-        height: 60px;
-    }
     .left-section, .right-section {
         background-color: #333333;
         padding: 20px;
@@ -81,42 +78,23 @@ st.markdown("""
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
-    .stColumn > div {
-        flex: 1;
-        padding: 10px;
-        max-width: 100%;
-    }
-    .stColumn {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 20px;
-    }
-    @media (min-width: 1000px) {
-        .stColumn > div {
-            max-width: 70%;
-        }
-    }
-    @media (min-width: 1400px) {
-        .stColumn > div {
-            max-width: 45%;
-        }
-    }
     </style>
 """, unsafe_allow_html=True)
 
 # 메인 타이틀과 아이콘 함께 표시
 icon_image = Image.open('chatdoc_icon.png')
 
-# 중앙에 아이콘과 타이틀을 배치하기 위해 빈 열 추가
-col1, col2, col3 = st.columns([1, 6, 1])
-with col2:
-    st.markdown("""
-    <div class="title-section">
-      <img src="data:image/png;base64,{icon_image}" alt="Chat Doc Icon">
-      <h1>Chat Doc</h1>
-    </div>
-    """, unsafe_allow_html=True)
+# 아이콘을 base64로 인코딩하여 HTML에 삽입
+buffered = BytesIO()
+icon_image.save(buffered, format="PNG")
+icon_base64 = base64.b64encode(buffered.getvalue()).decode()
+
+st.markdown(f"""
+<div class="title-section">
+    <img src="data:image/png;base64,{icon_base64}" alt="Chat Doc Icon" style="width:60px;height:60px;">
+    <h1>Chat Doc</h1>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <p style="text-align:center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
