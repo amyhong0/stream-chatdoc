@@ -3,12 +3,6 @@ import requests
 import json
 from PIL import Image
 
-# 이미지 로드
-icon_image = Image.open('chatdoc_icon.png')
-
-# Streamlit을 사용하여 이미지 표시
-st.image(icon_image, width=60)
-
 # LaaS API 호출 함수
 def get_chat_completions(messages):
     try:
@@ -112,10 +106,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 메인 타이틀과 아이콘 함께 표시
+icon_image = Image.open('chatdoc_icon.png')
 st.markdown("""
     <div class="title-section">
-        <img src="chatdoc_icon.png" alt="Chat Doc Icon">
-        <h1>Chat Doc</h1>
+""", unsafe_allow_html=True)
+st.image(icon_image, width=60)
+st.markdown("""
+      <h1>Chat Doc</h1>
     </div>
     <p style="text-align: center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
@@ -155,5 +152,4 @@ if 'generated_guide' not in locals():
             <h2>Generated Guide</h2>
             <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
         </div>
-        """, unsafe_allow_html=True)
-
+""", unsafe_allow_html=True)
