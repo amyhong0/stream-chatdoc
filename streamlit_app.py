@@ -139,6 +139,10 @@ if 'generated_guide' not in locals():
         </div>
 """, unsafe_allow_html=True)
 
+except Exception as e:
+    st.error(f"LaaS API 호출 중 예외 발생: {e}")
+    raise e  # 전체 스택 트레이스를 확인하기 위해 추가
+
 
 
 
