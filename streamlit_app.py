@@ -58,6 +58,10 @@ st.markdown("""
         font-weight: bold;
         text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
     }
+    .title-section img {
+        width: 60px;
+        height: 60px;
+    }
     .left-section, .right-section {
         background-color: #333333;
         padding: 20px;
@@ -109,16 +113,15 @@ st.markdown("""
 <div class="title-section">
 """, unsafe_allow_html=True)
 
-# Streamlit의 st.image()를 사용하여 아이콘을 표시
-st.image(icon_image, width=60)
+# Streamlit의 st.image()를 사용하여 아이콘을 표시하고 HTML로 타이틀을 표시
+col1, col2 = st.columns([1, 8])
+with col1:
+    st.image(icon_image, width=60)
+with col2:
+    st.markdown("<h1 style='text-align:left;'>Chat Doc</h1>", unsafe_allow_html=True)
 
-# 타이틀을 HTML로 표시
 st.markdown("""
-<h1>Chat Doc</h1>
 </div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
 <p style="text-align:center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
 
