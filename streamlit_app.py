@@ -45,12 +45,12 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
     .title-section {
-        text-align: center;
-        padding: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 10px;
+        text-align: center;
+        padding: 20px;
     }
     .title-section h1 {
         font-size: 3rem;
@@ -105,17 +105,20 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# 메인 타이틀과 아이콘 함께 표시
+icon_image = Image.open('chatdoc_icon.png')
+icon_path = 'chatdoc_icon.png' # Ensure this path is correct
 
-# HTML 블록으로 아이콘과 타이틀을 중앙 정렬
+# 아이콘과 타이틀을 중앙 정렬된 HTML 블록으로 표시
 st.markdown(f"""
     <div class="title-section">
-      <img src="data:image/png;base64,{Image.open(chatdoc_icon.png)}" alt="Chat Doc Icon">
+      <img src="data:image/png;base64,{icon_image}" alt="Chat Doc Icon">
       <h1>Chat Doc</h1>
     </div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
-<p style="text-align: center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
+<p style="text-align:center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
 """, unsafe_allow_html=True)
 
 # Streamlit 레이아웃 설정 (두 개의 컬럼을 사용하여 좌우 섹션 나누기)
