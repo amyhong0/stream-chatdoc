@@ -135,3 +135,31 @@ if 'generated_guide' not in locals():
             <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
         </div>
 """, unsafe_allow_html=True)
+
+
+
+from fpdf import FPDF
+
+# PDF 생성 함수
+def create_pdf(text):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.multi_cell(0, 10, text)
+    return pdf.output(dest='S').encode('latin1')
+
+# PDF 다운로드 함수
+def download_pdf(pdf_content, filename):
+    b64 = base64.b64encode(pdf_content).decode()
+    href = f'<a href="data:application/octet-stream;base64,{b64}" download="{filename}">Download PDF</a>'
+    st.markdown(href, unsafe_allow_html=True)
+
+# Streamlit 앱 내에서 사용 예시
+st.title("PDF 생성 예제")
+
+# 생성된 가이드 내용 (예시)
+generated_guide = "이것은 생성된 가이드 내용의 예시입니다."
+
+if st.button("PDF 생성"):
+    pdf_content = create_pdf(generated_guide)
+    download_pdf(pdf_content, "generated_guide.pdf")
