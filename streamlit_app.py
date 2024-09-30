@@ -1,9 +1,10 @@
 import streamlit as st
+import json
 import requests
 from PIL import Image
 import base64
 from io import BytesIO  # Import BytesIO
-import json
+from fpdf import FPDF
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
@@ -140,7 +141,6 @@ if 'generated_guide' not in locals():
 
 
 
-from fpdf import FPDF
 
 # PDF 생성 함수
 def create_pdf(text):
