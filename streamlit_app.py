@@ -58,10 +58,6 @@ st.markdown("""
         font-weight: bold;
         text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
     }
-    .title-section img {
-        width: 60px;
-        height: 60px;
-    }
     .left-section, .right-section {
         background-color: #333333;
         padding: 20px;
@@ -107,14 +103,19 @@ st.markdown("""
 
 # 메인 타이틀과 아이콘 함께 표시
 icon_image = Image.open('chatdoc_icon.png')
-icon_path = 'chatdoc_icon.png' # Ensure this path is correct
 
 # 아이콘과 타이틀을 중앙 정렬된 HTML 블록으로 표시
-st.markdown(f"""
-    <div class="title-section">
-      <img src="data:image/png;base64,{icon_image}" alt="Chat Doc Icon">
-      <h1>Chat Doc</h1>
-    </div>
+st.markdown("""
+<div class="title-section">
+""", unsafe_allow_html=True)
+
+# Streamlit의 st.image()를 사용하여 아이콘을 표시
+st.image(icon_image, width=60)
+
+# 타이틀을 HTML로 표시
+st.markdown("""
+<h1>Chat Doc</h1>
+</div>
 """, unsafe_allow_html=True)
 
 st.markdown("""
