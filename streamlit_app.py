@@ -1,6 +1,13 @@
 import streamlit as st
 import requests
 import json
+from PIL import Image
+
+# 이미지 로드
+icon_image = Image.open('path/to/chatdoc_icon.png')
+
+# Streamlit을 사용하여 이미지 표시
+st.image(icon_image, width=60)
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
