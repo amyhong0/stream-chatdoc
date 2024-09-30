@@ -1,8 +1,7 @@
 import streamlit as st
-import requests
-import json
 from PIL import Image
 import base64
+from io import BytesIO  # Import BytesIO
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
@@ -107,32 +106,3 @@ left_column, right_column = st.columns(2)
 with left_column:
     st.markdown("""
     <div class="left-section">
-        <h2>Conversation</h2>
-        <p>Please enter the conversation:</p>
-    """, unsafe_allow_html=True)
-    conversation_input = st.text_area("", height=200)
-
-    # Generate Guide 버튼: 입력창 아래에 배치
-    if st.button('Generate Guide', key="generate_button"):
-        if conversation_input:
-            generated_guide = get_chat_completions(conversation_input)
-            # 오른쪽 섹션에 마크다운 형식으로 결과 표시
-            with right_column:
-                st.markdown("""
-                <div class="right-section">
-                    <h2>Generated Guide</h2>
-                    <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
-                """, unsafe_allow_html=True)
-                st.markdown(generated_guide, unsafe_allow_html=True)
-                st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# 오른쪽 섹션: Generated Guide - 기본 화면에서 비어 있을 때 표시
-if 'generated_guide' not in locals():
-    with right_column:
-        st.markdown("""
-        <div class="right-section">
-            <h2>Generated Guide</h2>
-            <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
-        </div>
-""", unsafe_allow_html=True)
