@@ -3,7 +3,7 @@ import json
 import requests
 from PIL import Image
 import base64
-from io import BytesIO  # Import BytesIO
+from io import BytesIO
 from fpdf import FPDF
 
 # LaaS API 호출 함수
@@ -37,7 +37,8 @@ def get_chat_completions(messages):
         else:
             return f"LaaS API 호출 오류: {response.status_code}, {response.text}"
     except Exception as e:
-        return f"LaaS API 호출 중 예외 발생: {e}"
+        st.error(f"LaaS API 호출 중 예외 발생: {e}")
+        raise e
 
 # CSS 스타일 적용
 st.markdown("""
@@ -117,16 +118,19 @@ with left_column:
     # Generate Guide 버튼: 입력창 아래에 배치
     if st.button('Generate Guide', key="generate_button"):
         if conversation_input:
-            generated_guide = get_chat_completions(conversation_input)
-            # 오른쪽 섹션에 마크다운 형식으로 결과 표시
-            with right_column:
-                st.markdown("""
-                <div class="right-section">
-                    <h2>Generated Guide</h2>
-                    <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
-                """, unsafe_allow_html=True)
-                st.markdown(generated_guide, unsafe_allow_html=True)
-                st.markdown("</div>", unsafe_allow_html=True)
+            try:
+                generated_guide = get_chat_completions(conversation_input)
+                # 오른쪽 섹션에 마크다운 형식으로 결과 표시
+                with right_column:
+                    st.markdown("""
+                    <div class="right-section">
+                        <h2>Generated Guide</h2>
+                        <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
+                    """, unsafe_allow_html=True)
+                    st.markdown(generated_guide, unsafe_allow_html=True)
+                    st.markdown("</div>", unsafe_allow_html=True)
+            except Exception as e:
+                st.error(f"Error generating guide: {e}")
     st.markdown("</div>", unsafe_allow_html=True)
 
 # 오른쪽 섹션: Generated Guide - 기본 화면에서 비어 있을 때 표시
@@ -138,13 +142,6 @@ if 'generated_guide' not in locals():
             <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
         </div>
 """, unsafe_allow_html=True)
-
-except Exception as e:
-    st.error(f"LaaS API 호출 중 예외 발생: {e}")
-    raise e  # 전체 스택 트레이스를 확인하기 위해 추가
-
-
-
 
 # PDF 생성 함수
 def create_pdf(text):
@@ -160,12 +157,9 @@ def download_pdf(pdf_content, filename):
     href = f'<a href="data:application/octet-stream;base64,{b64}" download="{filename}">Download PDF</a>'
     st.markdown(href, unsafe_allow_html=True)
 
-# Streamlit 앱 내에서 사용 예시
 st.title("PDF 생성 예제")
 
-# 생성된 가이드 내용 (예시)
-generated_guide = "이것은 생성된 가이드 내용의 예시입니다."
-
 if st.button("PDF 생성"):
-    pdf_content = create_pdf(generated_guide)
-    download_pdf(pdf_content, "generated_guide.pdf")
+    if 'generated_guide' in locals():
+        pdf_content = create_pdf(generated_guide)
+        download_pdf(pdf_content, "generated_guide.pdf")
