@@ -1,4 +1,6 @@
 import streamlit as st
+import requests
+import json
 from PIL import Image
 import base64
 from io import BytesIO  # Import BytesIO
