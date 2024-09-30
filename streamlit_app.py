@@ -1,9 +1,9 @@
 import streamlit as st
 import requests
-import json
 from PIL import Image
 import base64
 from io import BytesIO  # Import BytesIO
+import json
 
 # LaaS API 호출 함수
 def get_chat_completions(messages):
