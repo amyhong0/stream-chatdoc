@@ -4,7 +4,7 @@ import json
 from PIL import Image
 
 # 이미지 로드
-icon_image = Image.open('path/to/chatdoc_icon.png')
+icon_image = Image.open('chatdoc_icon.png')
 
 # Streamlit을 사용하여 이미지 표시
 st.image(icon_image, width=60)
