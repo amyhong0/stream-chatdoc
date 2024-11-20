@@ -133,9 +133,8 @@ def create_pdf(content, filename):
    pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)
    pdf.set_font('Nanum', '', 12)
 
-   # 여러 줄 텍스트를 PDF로 저장
    for line in content.split('\n'):
-       pdf.multi_cell(0, 10, txt=line)  # multi_cell의 첫 번째 인자를 '0'으로 설정해 너비를 자동으로 맞춤
+       pdf.multi_cell(0, 10, txt=line)
 
    pdf.output(filename)
 
@@ -210,4 +209,3 @@ with right_column:
        create_pdf(st.session_state.generated_guide, 'generated_guide.pdf')
        with open('generated_guide.pdf', 'rb') as pdf_file:
            st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
-           
