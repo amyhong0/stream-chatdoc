@@ -30,7 +30,7 @@ st.markdown(
     .stButton > button {
         background-color: coral;
         color: white;
-        padding: 15px 30px;
+        padding: 10px 20px;
         font-size: 1rem;
         font-weight: bold;
         border-radius: 5px;
@@ -40,9 +40,9 @@ st.markdown(
 
     /* PDF 저장 버튼 스타일: 진한 올리브 배경에 흰색 글씨 */
     .stDownloadButton > button, .stDownloadButton > button:hover {
-        background-color: green;
+        background-color: #8FBD24; /* 연두색 */
         color: white !important;
-        padding: 15px 30px;
+        padding: 10px 20px;
         font-size: 1rem;
         font-weight: bold;
         border-radius: 5px;
@@ -53,10 +53,11 @@ st.markdown(
     /* 버튼 hover 시 색상 변경 */
     .stButton > button:hover {
         background-color: #DC7660; /* darker coral */
+        color: white;
     }
 
     .stDownloadButton > button:hover {
-        background-color: darkgreen;
+        background-color: #356300; /* 짙은 연두색 */
         color: white;
     }
     .stButton > button:active, .stDownloadButton > button:active {
@@ -136,7 +137,7 @@ with left_column:
    )
     
    # 대화 입력창 (Streamlit의 text_area 사용)
-   conversation_input = st.text_area("Enter conversation:", height=200)
+   conversation_input = st.text_area("Enter conversation:", height=200, width=500)
 
 
 # 현재 스크립트 파일이 위치한 경로
@@ -168,7 +169,7 @@ if 'generated_guide' not in st.session_state:
    st.session_state.generated_guide = ""
 
 # 버튼 클릭 시 동작
-if st.button('Generate Guide', key='generate_button', use_container_width=True):
+if st.button('Generate Guide', key='generate_button', use_container_width=False, width=500):
    if conversation_input.strip() == "":
        st.error("Please enter a conversation.")
    else:
@@ -238,7 +239,7 @@ with right_column:
                st.download_button(
                    'Save as PDF', 
                    pdf_file,
-                   file_name='generated_guide.pdf',
-                   key='download_button', use_container_width=True,
+                   file_name='generated_guide.pdf', use_container_width=False, width=500,
+                   key='download_button'
                )
 
