@@ -31,7 +31,7 @@ st.markdown(
         background-color: coral;
         color: white;
         padding: 15px 30px;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
         border-radius: 5px;
         border: none;
@@ -39,11 +39,11 @@ st.markdown(
     }
 
     /* PDF 저장 버튼 스타일: 진한 올리브 배경에 흰색 글씨 */
-    .stDownloadButton > button {
-        background-color: olive;
+    .stDownloadButton > button, .stDownloadButton > button:hover {
+        background-color: green;
         color: white !important;
         padding: 15px 30px;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
         border-radius: 5px;
         border: none;
@@ -56,8 +56,8 @@ st.markdown(
     }
 
     .stDownloadButton > button:hover {
-        background-color: #556B2F; /* darker olive */
-        color: white !important;
+        background-color: darkgreen;
+        color: white;
     }
     .stButton > button:active, .stDownloadButton > button:active {
         opacity: 0.8;
@@ -168,7 +168,7 @@ if 'generated_guide' not in st.session_state:
    st.session_state.generated_guide = ""
 
 # 버튼 클릭 시 동작
-if st.button('Generate Guide', key='generate_button'):
+if st.button('Generate Guide', key='generate_button', use_container_width=True):
    if conversation_input.strip() == "":
        st.error("Please enter a conversation.")
    else:
@@ -237,7 +237,7 @@ with right_column:
            with open('generated_guide.pdf', 'rb') as pdf_file:
                st.download_button(
                    'Save as PDF', 
-                   pdf_file, 
+                   pdf_file,
                    file_name='generated_guide.pdf',
                    key='download_button', use_container_width=True,
                )
