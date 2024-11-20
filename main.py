@@ -44,6 +44,7 @@ st.markdown(
         border-radius: 5px;
         border: none;
         cursor: pointer;
+        float:right; /* 오른쪽 끝에 배치 */
     }
 
     /* 버튼 hover 시 약간 밝게 */
@@ -133,14 +134,20 @@ with right_column:
         unsafe_allow_html=True,
     )
 
-# PDF 생성 함수 정의
+# PDF 생성 함수 정의 (UTF-8 지원)
 def create_pdf(content, filename):
     pdf = FPDF()
+    
+    # UTF-8 지원 폰트 추가 (DejaVu 폰트 사용)
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
+    
+    # DejaVu 폰트는 UTF-8을 지원하는 폰트 중 하나입니다.
+    pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
+    
+    pdf.set_font('DejaVu', '', 12)
 
     for line in content.split('\n'):
-        pdf.cell(200, 10, txt=line.encode('latin-1', 'replace').decode('latin-1'), ln=True)
+        pdf.multi_cell(200, 10, txt=line)
 
     pdf.output(filename)
 
@@ -200,7 +207,8 @@ if st.button('Generate Guide'):
         # API 호출 및 결과 표시
         generated_guide = get_chat_completions(conversation_input)
         
-        with right_column:
+       # 가이드 표시 유지 (저장 후에도 계속 표시됨)
+       with right_column:
             st.markdown(
                 f"""
                 <div class="right-section">
