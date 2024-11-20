@@ -30,7 +30,7 @@ st.markdown(
     .stButton > button {
         background-color: coral;
         color: white;
-        padding: 10px 20px;
+        padding: 15px 30px;
         font-size: 1rem;
         font-weight: bold;
         border-radius: 5px;
@@ -42,7 +42,7 @@ st.markdown(
     .stDownloadButton > button, .stDownloadButton > button:hover {
         background-color: #8FBD24; /* 연두색 */
         color: white !important;
-        padding: 10px 20px;
+        padding: 15px 30px;
         font-size: 1rem;
         font-weight: bold;
         border-radius: 5px;
@@ -137,7 +137,7 @@ with left_column:
    )
     
    # 대화 입력창 (Streamlit의 text_area 사용)
-   conversation_input = st.text_area("Enter conversation:", height=200, width=500)
+   conversation_input = st.text_area("Enter conversation:", height=200)
 
 
 # 현재 스크립트 파일이 위치한 경로
@@ -169,7 +169,7 @@ if 'generated_guide' not in st.session_state:
    st.session_state.generated_guide = ""
 
 # 버튼 클릭 시 동작
-if st.button('Generate Guide', key='generate_button', use_container_width=False, width=500):
+if st.button('Generate Guide', key='generate_button', use_container_width=True):
    if conversation_input.strip() == "":
        st.error("Please enter a conversation.")
    else:
@@ -239,7 +239,7 @@ with right_column:
                st.download_button(
                    'Save as PDF', 
                    pdf_file,
-                   file_name='generated_guide.pdf', use_container_width=False, width=500,
-                   key='download_button'
+                   file_name='generated_guide.pdf',
+                   key='download_button', use_container_width=True,
                )
 
