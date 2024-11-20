@@ -169,7 +169,7 @@ if 'generated_guide' not in st.session_state:
    st.session_state.generated_guide = ""
 
 # 버튼 클릭 시 동작
-if st.button('Generate Guide', key='generate_button', use_container_width=True):
+if st.button('Generate Guide', key='generate_button'):
    if conversation_input.strip() == "":
        st.error("Please enter a conversation.")
    else:
@@ -239,7 +239,7 @@ with right_column:
                st.download_button(
                    'Save as PDF', 
                    pdf_file,
-                   file_name='generated_guide.pdf',
-                   key='download_button', use_container_width=True,
+                   file_name='generated_guide.pdf', 
+                   key='download_button'
                )
 
