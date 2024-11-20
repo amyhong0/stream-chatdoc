@@ -220,7 +220,6 @@ with right_column:
    if st.session_state.generated_guide.strip():
        if create_pdf(st.session_state.generated_guide, 'generated_guide.pdf'):
            st.error("PDF creation failed. Please check font file.")
-           return
        with open('generated_guide.pdf', 'rb') as pdf_file:
            st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
 
