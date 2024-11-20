@@ -15,10 +15,10 @@ st.markdown(
         color: white;
         font-family: Arial, sans-serif;
     }
-    
+
     /* "Enter conversation:" 글씨를 흰색으로 설정 */
-    label {
-        color: white;
+    .stTextArea label {
+        color: white !important;
     }
 
     /* 버튼 스타일: 코랄 배경에 흰색 글씨 */
