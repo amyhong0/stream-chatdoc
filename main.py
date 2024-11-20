@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import json
+import os
 from fpdf import FPDF
 
 # 페이지 설정: 기본 타이틀 제거 및 레이아웃 설정
@@ -124,20 +125,27 @@ with left_column:
    # 대화 입력창 (Streamlit의 text_area 사용)
    conversation_input = st.text_area("Enter conversation:", height=200)
 
-# PDF 생성 함수 정의 (UTF-8 지원)
+
+# 현재 스크립트 파일이 위치한 경로
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# NanumGothic.ttf 폰트 파일의 절대 경로 설정
+font_path = os.path.join(current_dir, "NanumGothic.ttf")
+
+# PDF 생성 함수 정의
 def create_pdf(content, filename):
-   pdf = FPDF()
-   pdf.add_page()
+    pdf = FPDF()
+    pdf.add_page()
 
-   # 나눔고딕 폰트 추가 (한글 지원)
-   pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)   # NanumGothic.ttf 파일이 같은 디렉토리에 있어야 함
-   pdf.set_font('Nanum', '', 12)
+    # 나눔고딕 폰트 추가
+    pdf.add_font('Nanum', '', font_path, uni=True)
+    pdf.set_font('Nanum', '', 12)
 
-   # 여러 줄 텍스트를 PDF로 저장
-   for line in content.split('\n'):
-       pdf.multi_cell(0, 10, txt=line.encode('latin-1', 'replace').decode('latin-1'))  
+    # 여러 줄 텍스트를 PDF로 저장
+    for line in content.split('\n'):
+        pdf.multi_cell(0, 10, txt=line.encode('latin-1', 'replace').decode('latin-1'))
 
-   pdf.output(filename)
+    pdf.output(filename)
 
 # 상태 변수로 generated_guide를 유지하기 위해 session state 사용
 if 'generated_guide' not in st.session_state:
