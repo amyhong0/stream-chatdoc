@@ -5,7 +5,7 @@ import json
 # 페이지 설정: 기본 타이틀 제거 및 레이아웃 설정
 st.set_page_config(page_title="Chat Doc", layout="wide", initial_sidebar_state="collapsed")
 
-# CSS를 사용하여 전체 배경을 블랙으로 설정
+# CSS를 사용하여 전체 배경을 블랙으로 설정 및 버튼, 텍스트 스타일 수정
 st.markdown(
     """
     <style>
@@ -15,6 +15,29 @@ st.markdown(
         color: white;
         font-family: Arial, sans-serif;
     }
+    
+    /* "Enter conversation:" 글씨를 흰색으로 설정 */
+    label {
+        color: white;
+    }
+
+    /* 버튼 스타일: 코랄 배경에 흰색 글씨 */
+    div.stButton > button {
+        background-color: coral;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* 버튼 hover 시 약간 밝게 */
+    div.stButton > button:hover {
+        background-color: #ff7f50; /* coral보다 약간 밝은 색상 */
+    }
+
     .title-section {
         text-align: center;
         padding: 20px;
@@ -23,12 +46,14 @@ st.markdown(
         align-items: center;
         gap: 10px;
     }
+    
     .title-section h1 {
         font-size: 3rem;
         color: white;
         font-weight: bold;
         text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.7);
     }
+    
     .left-section, .right-section {
         background-color: #333333;
         padding: 20px;
@@ -36,15 +61,18 @@ st.markdown(
         margin: 10px;
         color: white;
     }
+    
     .left-section {
         background-color: #4f4f4f;
     }
+    
     h2 {
         font-size: 1.5rem;
         color: white;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
+    
     </style>
     """,
     unsafe_allow_html=True
