@@ -210,3 +210,4 @@ with right_column:
        create_pdf(st.session_state.generated_guide, 'generated_guide.pdf')
        with open('generated_guide.pdf', 'rb') as pdf_file:
            st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
+
