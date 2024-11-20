@@ -47,7 +47,6 @@ st.markdown(
         border-radius: 5px;
         border: none;
         cursor: pointer;
-        float:right; /* 오른쪽 끝에 배치 */
     }
 
     /* 버튼 hover 시 약간 밝게 */
@@ -139,6 +138,10 @@ def create_pdf(content, filename):
 
    pdf.output(filename)
 
+# 상태 변수로 generated_guide를 유지하기 위해 session state 사용
+if 'generated_guide' not in st.session_state:
+   st.session_state.generated_guide = ""
+
 # 버튼 클릭 시 동작
 if st.button('Generate Guide'):
    if conversation_input.strip() == "":
@@ -186,33 +189,23 @@ if st.button('Generate Guide'):
            except Exception as e:
                return f"LaaS API 호출 중 예외 발생 {e}"
 
-       # API 호출 및 결과 표시
-       generated_guide = get_chat_completions(conversation_input)
-
-       with right_column:
-           st.markdown(
-               f"""
-               <div class="right-section">
-                   <h2>Generated Guide</h2>
-                   <p>{generated_guide}</p>
-               </div>
-               """,
-               unsafe_allow_html=True,
-           )
-
-           # PDF 저장 버튼 추가 (오른쪽 끝에 배치)
-           create_pdf(generated_guide, 'generated_guide.pdf')
-           with open('generated_guide.pdf', 'rb') as pdf_file:
-               st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
+       # API 호출 및 결과를 session_state에 저장하여 유지
+       st.session_state.generated_guide = get_chat_completions(conversation_input)
 
 # 오른쪽 섹션 (생성된 가이드가 여기에 표시됨)
 with right_column:
    st.markdown(
-       """
+       f"""
        <div class="right-section">
            <h2>Generated Guide</h2>
-           <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
+           <p>{st.session_state.generated_guide}</p>
        </div>
        """,
        unsafe_allow_html=True,
    )
+
+   # PDF 저장 버튼 추가 (오른쪽 끝에 배치)
+   if st.session_state.generated_guide.strip():
+       create_pdf(st.session_state.generated_guide, 'generated_guide.pdf')
+       with open('generated_guide.pdf', 'rb') as pdf_file:
+           st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
