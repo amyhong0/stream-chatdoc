@@ -28,7 +28,7 @@ st.markdown(
 
     /* 버튼 스타일: 코랄 배경에 흰색 글씨 */
     .stButton > button {
-        background-color: coral;
+        background-color: #CC723D;
         color: white;
         padding: 15px 30px;
         font-size: 1rem;
@@ -52,7 +52,7 @@ st.markdown(
 
     /* 버튼 hover 시 색상 변경 */
     .stButton > button:hover {
-        background-color: #DC7660; /* darker coral */
+        background-color: #963C07; /* darker coral */
         color: white;
     }
 
