@@ -27,7 +27,7 @@ st.markdown(
     }
 
     /* 버튼 스타일: 코랄 배경에 흰색 글씨 */
-    div.stButton > button {
+    .stButton > button {
         background-color: coral;
         color: white;
         padding: 15px 30px;
@@ -38,8 +38,8 @@ st.markdown(
         cursor: pointer;
     }
 
-    /* PDF 저장 버튼 스타일: 올리브 배경에 흰색 글씨 */
-    div.stDownloadButton > button {
+    /* PDF 저장 버튼 스타일: 진한 올리브 배경에 흰색 글씨 */
+    .stDownloadButton > button {
         background-color: olive;
         color: white;
         padding: 15px 30px;
@@ -50,9 +50,16 @@ st.markdown(
         cursor: pointer;
     }
 
-    /* 버튼 hover 시 약간 밝게 */
-    div.stButton > button:hover, div.stDownloadButton > button:hover {
-        background-color: #ff7f50; /* coral보다 약간 밝은 색상 */
+    /* 버튼 hover 시 색상 변경 */
+    .stButton > button:hover {
+        background-color: #DC7660; /* darker coral */
+    }
+
+    .stDownloadButton > button:hover {
+        background-color: #556B2F; /* darker olive */
+    }
+    .stButton > button:active, .stDownloadButton > button:active {
+        opacity: 0.8;
     }
 
     .title-section {
@@ -77,6 +84,11 @@ st.markdown(
         border-radius: 10px;
         margin: 10px;
         color: white;
+    }
+
+    .right-section {
+        display: flex;
+        flex-direction: column;
     }
     
     .left-section {
@@ -216,10 +228,15 @@ with right_column:
        unsafe_allow_html=True,
    )
 
-   # PDF 저장 버튼 추가 (오른쪽 끝에 배치)
+   # PDF 저장 버튼 추가 (오른쪽 아래에 배치)
    if st.session_state.generated_guide.strip():
        if create_pdf(st.session_state.generated_guide, 'generated_guide.pdf'):
            st.error("PDF creation failed. Please check font file.")
-       with open('generated_guide.pdf', 'rb') as pdf_file:
-           st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
-
+       else:
+           with open('generated_guide.pdf', 'rb') as pdf_file:
+               st.download_button(
+                   'Save as PDF', 
+                   pdf_file, 
+                   file_name='generated_guide.pdf', 
+                   key='download_button', use_container_width=True
+               )
