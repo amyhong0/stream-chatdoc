@@ -34,8 +34,20 @@ st.markdown(
         cursor: pointer;
     }
 
+    /* PDF 저장 버튼 스타일: 올리브 배경에 흰색 글씨 */
+    div.stDownloadButton > button {
+        background-color: olive;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+    }
+
     /* 버튼 hover 시 약간 밝게 */
-    div.stButton > button:hover {
+    div.stButton > button:hover, div.stDownloadButton > button:hover {
         background-color: #ff7f50; /* coral보다 약간 밝은 색상 */
     }
 
@@ -199,8 +211,8 @@ if st.button('Generate Guide'):
                 unsafe_allow_html=True,
             )
         
-        # PDF 저장 버튼 추가
-        if st.button('Save as PDF'):
-            create_pdf(generated_guide, 'generated_guide.pdf')
-            with open('generated_guide.pdf', 'rb') as pdf_file:
-                st.download_button('Download PDF', pdf_file, file_name='generated_guide.pdf')
+            # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
+            if generated_guide.strip():
+                create_pdf(generated_guide, 'generated_guide.pdf')
+                with open('generated_guide.pdf', 'rb') as pdf_file:
+                    st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
