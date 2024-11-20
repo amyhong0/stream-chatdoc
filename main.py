@@ -130,12 +130,12 @@ def create_pdf(content, filename):
    pdf.add_page()
 
    # 나눔고딕 폰트 추가 (한글 지원)
-   pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)
+   pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)   # NanumGothic.ttf 파일이 같은 디렉토리에 있어야 함
    pdf.set_font('Nanum', '', 12)
 
    # 여러 줄 텍스트를 PDF로 저장
    for line in content.split('\n'):
-       pdf.multi_cell(0, 10, txt=line)  # multi_cell의 첫 번째 인자를 '0'으로 설정해 너비를 자동으로 맞춤
+       pdf.multi_cell(0, 10, txt=line.encode('latin-1', 'replace').decode('latin-1'))  
 
    pdf.output(filename)
 
@@ -188,25 +188,3 @@ if st.button('Generate Guide'):
                    return f"LaaS API 호출 오류 {response.status_code}: {response.text}"
 
            except Exception as e:
-               return f"LaaS API 호출 중 예외 발생 {e}"
-
-       # API 호출 및 결과를 session_state에 저장하여 유지
-       st.session_state.generated_guide = get_chat_completions(conversation_input)
-
-# 오른쪽 섹션 (생성된 가이드가 여기에 표시됨)
-with right_column:
-   st.markdown(
-       f"""
-       <div class="right-section">
-           <h2>Generated Guide</h2>
-           {st.session_state.generated_guide}
-       </div>
-       """,
-       unsafe_allow_html=True,
-   )
-
-   # PDF 저장 버튼 추가 (오른쪽 끝에 배치)
-   if st.session_state.generated_guide.strip():
-       create_pdf(st.session_state.generated_guide, 'generated_guide.pdf')
-       with open('generated_guide.pdf', 'rb') as pdf_file:
-           st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
