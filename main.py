@@ -141,12 +141,29 @@ def create_pdf(content, filename):
     # UTF-8 지원 폰트 추가 (NanumGothic 폰트 사용)
     pdf.add_page()
     
-    # NanumGothic 폰트를 추가 (한글 지원)
-    pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)
+    # NanumGothic 폰트 추가 (기본, Bold, Extra Bold, Light)
+    pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)                # 기본 폰트
+    pdf.add_font('Nanum', 'B', 'NanumGothicBold.ttf', uni=True)           # Bold 폰트
+    pdf.add_font('Nanum', 'EB', 'NanumGothicExtraBold.ttf', uni=True)     # Extra Bold 폰트
+    pdf.add_font('Nanum', 'L', 'NanumGothicLight.ttf', uni=True)          # Light 폰트
     
+    # 기본 폰트로 시작 (필요에 따라 변경 가능)
     pdf.set_font('Nanum', '', 12)
 
     for line in content.split('\n'):
+        
+        if "bold" in line.lower():   # 예시로 특정 조건에서 Bold 적용
+            pdf.set_font('Nanum', 'B', 12)
+        
+        elif "extra bold" in line.lower():   # 특정 조건에서 Extra Bold 적용
+            pdf.set_font('Nanum', 'EB', 12)
+        
+        elif "light" in line.lower():   # 특정 조건에서 Light 적용
+            pdf.set_font('Nanum', 'L', 12)
+        
+        else:
+            pdf.set_font('Nanum', '', 12)   # 기본 폰트로 되돌림
+
         pdf.multi_cell(200, 10, txt=line)
 
     pdf.output(filename)
@@ -206,6 +223,7 @@ if st.button('Generate Guide'):
         
        # 가이드 표시 유지 (저장 후에도 계속 표시됨)
         generated_guide = get_chat_completions(conversation_input)
+        
         with right_column:
             st.markdown(
                 f"""
