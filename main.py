@@ -203,9 +203,10 @@ if st.button('Generate Guide'):
             except Exception as e:
                 return f"LaaS API 호출 중 예외 발생: {e}"
 
+        generated_guide = get_chat_completions(conversation_input)
         
-       # 가이드 표시 유지 (저장 후에도 계속 표시됨)
-       with right_column:
+        # 가이드 표시 유지 (저장 후에도 계속 표시됨)
+        with right_column:
             st.markdown(
                 f"""
                 <div class="right-section">
@@ -216,8 +217,8 @@ if st.button('Generate Guide'):
                 unsafe_allow_html=True,
             )
         
-       # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
-       if generated_guide.strip():
-           create_pdf(generated_guide, 'generated_guide.pdf')
-           with open('generated_guide.pdf', 'rb') as pdf_file:
-               st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
+        # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
+        if generated_guide.strip():
+            create_pdf(generated_guide, 'generated_guide.pdf')
+            with open('generated_guide.pdf', 'rb') as pdf_file:
+                st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
