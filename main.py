@@ -6,15 +6,18 @@ from fpdf import FPDF
 # 페이지 설정: 기본 타이틀 제거 및 레이아웃 설정
 st.set_page_config(page_title="Chat Doc", layout="wide", initial_sidebar_state="collapsed")
 
-# CSS를 사용하여 전체 배경을 블랙으로 설정 및 버튼, 텍스트 스타일 수정
+# CSS를 사용하여 Nanum Gothic 웹폰트를 참조
 st.markdown(
     """
     <style>
+    /* Nanum Gothic 웹폰트 추가 */
+    @import url('https://hangeul.pstatic.net/hangeul_static/css/nanum-gothic.css');
+
     /* 전체 앱의 배경을 블랙으로 설정 */
     .stApp {
         background-color: black;
         color: white;
-        font-family: Arial, sans-serif;
+        font-family: 'Nanum Gothic', sans-serif;
     }
 
     /* "Enter conversation:" 글씨를 흰색으로 설정 */
@@ -109,134 +112,61 @@ left_column, right_column = st.columns(2)
 
 # 왼쪽 섹션 (대화 입력)
 with left_column:
-    st.markdown(
-        """
-        <div class="left-section">
-            <h2>Conversation</h2>
-            <p>Please enter the conversation:</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+   st.markdown(
+       """
+       <div class="left-section">
+           <h2>Conversation</h2>
+           <p>Please enter the conversation:</p>
+       </div>
+       """,
+       unsafe_allow_html=True,
+   )
     
-    # 대화 입력창 (Streamlit의 text_area 사용)
-    conversation_input = st.text_area("Enter conversation:", height=200)
+# 대화 입력창 (Streamlit의 text_area 사용)
+conversation_input = st.text_area("Enter conversation:", height=200)
 
 # 오른쪽 섹션 (생성된 가이드)
 with right_column:
-    st.markdown(
-        """
-        <div class="right-section">
-            <h2>Generated Guide</h2>
-            <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+   st.markdown(
+       """
+       <div class="right-section">
+           <h2>Generated Guide</h2>
+           <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
+       </div>
+       """,
+       unsafe_allow_html=True,
+   )
 
 # PDF 생성 함수 정의 (UTF-8 지원)
 def create_pdf(content, filename):
-    pdf = FPDF()
-    
-    # UTF-8 지원 폰트 추가 (NanumGothic 폰트 사용)
-    pdf.add_page()
-    
-    # NanumGothic 폰트 추가 (기본, Bold, Extra Bold, Light)
-    pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)                # 기본 폰트
-    pdf.add_font('Nanum', 'B', 'NanumGothicBold.ttf', uni=True)           # Bold 폰트
-    pdf.add_font('Nanum', 'EB', 'NanumGothicExtraBold.ttf', uni=True)     # Extra Bold 폰트
-    pdf.add_font('Nanum', 'L', 'NanumGothicLight.ttf', uni=True)          # Light 폰트
-    
-    # 기본 폰트로 시작 (필요에 따라 변경 가능)
-    pdf.set_font('Nanum', '', 12)
+   pdf = FPDF()
+   pdf.add_page()
+   pdf.set_font("Arial", size=12)   # 기본적으로 Arial 사용
 
-    for line in content.split('\n'):
-        
-        if "bold" in line.lower():   # 예시로 특정 조건에서 Bold 적용
-            pdf.set_font('Nanum', 'B', 12)
-        
-        elif "extra bold" in line.lower():   # 특정 조건에서 Extra Bold 적용
-            pdf.set_font('Nanum', 'EB', 12)
-        
-        elif "light" in line.lower():   # 특정 조건에서 Light 적용
-            pdf.set_font('Nanum', 'L', 12)
-        
-        else:
-            pdf.set_font('Nanum', '', 12)   # 기본 폰트로 되돌림
+   for line in content.split('\n'):
+       pdf.multi_cell(200, 10, txt=line)
 
-        pdf.multi_cell(200, 10, txt=line)
-
-    pdf.output(filename)
+   pdf.output(filename)
 
 # 버튼 클릭 시 동작
 if st.button('Generate Guide'):
-    
     if conversation_input.strip() == "":
-        st.error("Please enter a conversation.")
-    
+       st.error("Please enter a conversation.")
     else:
-        
-        # LaaS API 호출 함수 정의
-        def get_chat_completions(messages):
-            try:
-                # config.json 파일에서 API 키와 해시값을 읽어옴
-                with open('config.json', 'r') as f:
-                    config = json.load(f)
-                api_key = config['API_KEY']
-                laas_preset_hash = config['LAAS_PRESET_HASH']
-
-                url = 'https://api-laas.wanted.co.kr/api/preset/v2/chat/completions'
-                headers = {
-                    "project": "PROMPTHON_PRJ_385",
-                    "apiKey": api_key,
-                    "Content-Type": "application/json; charset=utf-8"
-                }
-                data = {
-                    "hash": laas_preset_hash,
-                    "messages": [{"role": "user", "content": messages}],
-                    "params": {"task": "guide_generation", "contents": " "}
-                }
-
-                # API 호출
-                response = requests.post(url, headers=headers, json=data)
-
-                # 상태 코드 확인
-                if response.status_code == 200:
-                    try:
-                        # 응답을 JSON으로 파싱
-                        response_data = response.json()
-                        choices = response_data.get("choices", [])
-                        if choices:
-                            return choices[0]["message"]["content"]
-                        else:
-                            return "No result found."
-                    except ValueError as e:
-                        # JSON 파싱 오류 처리
-                        return f"JSON 파싱 오류: {e}, 응답 내용: {response.text}"
-                else:
-                    # 상태 코드가 200이 아닌 경우 오류 메시지 출력
-                    return f"LaaS API 호출 오류: {response.status_code}, {response.text}"
-
-            except Exception as e:
-                return f"LaaS API 호출 중 예외 발생: {e}"
-
-        
-       # 가이드 표시 유지 (저장 후에도 계속 표시됨)
-        generated_guide = get_chat_completions(conversation_input)
-        
+        generated_guide = "Generated Guide Content"
+       
         with right_column:
             st.markdown(
-                f"""
-                <div class="right-section">
-                    <h2>Generated Guide</h2>
-                    <p>{generated_guide}</p>
-                </div>
-                """,
-                unsafe_allow_html=True,
+               f"""
+               <div class="right-section">
+                   <h2>Generated Guide</h2>
+                   <p>{generated_guide}</p>
+               </div>
+               """,
+               unsafe_allow_html=True,
             )
-        
-       # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
-        if generated_guide.strip():
+           
+           # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
             create_pdf(generated_guide, 'generated_guide.pdf')
             with open('generated_guide.pdf', 'rb') as pdf_file:
-               st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
+                st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
