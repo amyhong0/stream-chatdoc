@@ -40,7 +40,7 @@ st.markdown(
 
     /* PDF 저장 버튼 스타일: 진한 올리브 배경에 흰색 글씨 */
     .stDownloadButton > button, .stDownloadButton > button:hover {
-        background-color: #8FBD24; /* 연두색 */
+        background-color: #598700; /* 연두색 */
         color: white !important;
         padding: 15px 30px;
         font-size: 1rem;
