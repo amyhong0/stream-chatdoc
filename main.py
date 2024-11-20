@@ -213,7 +213,7 @@ if st.button('Generate Guide'):
                     <p>{generated_guide}</p>
                 </div>
                 """,
-                unsafe_allow_html=True,
+                unsafe_allow_html=True
             )
         
        # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
