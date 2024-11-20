@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import json
+from fpdf import FPDF
 
 # 페이지 설정: 기본 타이틀 제거 및 레이아웃 설정
 st.set_page_config(page_title="Chat Doc", layout="wide", initial_sidebar_state="collapsed")
@@ -120,6 +121,17 @@ with right_column:
         unsafe_allow_html=True,
     )
 
+# PDF 생성 함수 정의
+def create_pdf(content, filename):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    for line in content.split('\n'):
+        pdf.cell(200, 10, txt=line.encode('latin-1', 'replace').decode('latin-1'), ln=True)
+
+    pdf.output(filename)
+
 # 버튼 클릭 시 동작
 if st.button('Generate Guide'):
     
@@ -186,3 +198,9 @@ if st.button('Generate Guide'):
                 """,
                 unsafe_allow_html=True,
             )
+        
+        # PDF 저장 버튼 추가
+        if st.button('Save as PDF'):
+            create_pdf(generated_guide, 'generated_guide.pdf')
+            with open('generated_guide.pdf', 'rb') as pdf_file:
+                st.download_button('Download PDF', pdf_file, file_name='generated_guide.pdf')
