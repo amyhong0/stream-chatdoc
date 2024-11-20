@@ -134,16 +134,19 @@ font_path = os.path.join(current_dir, "NanumGothic.ttf")
 
 # PDF 생성 함수 정의
 def create_pdf(content, filename):
-    pdf = FPDF()
+    pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.add_page()
 
     # 나눔고딕 폰트 추가
-    pdf.add_font('Nanum', '', font_path, uni=True)
-    pdf.set_font('Nanum', '', 12)
+    try:
+        pdf.add_font('NanumGothic', '', font_path, uni=True)
+        pdf.set_font('NanumGothic', size=12)
+    except Exception as e:
+        print(f"Font loading error: {e}")
+        return
 
     # 여러 줄 텍스트를 PDF로 저장
-    for line in content.split('\n'):
-        pdf.multi_cell(0, 10, txt=line.encode('latin-1', 'replace').decode('latin-1'))
+    pdf.multi_cell(0, 10, txt=content)
 
     pdf.output(filename)
 
@@ -215,7 +218,9 @@ with right_column:
 
    # PDF 저장 버튼 추가 (오른쪽 끝에 배치)
    if st.session_state.generated_guide.strip():
-       create_pdf(st.session_state.generated_guide, 'generated_guide.pdf')
+       if create_pdf(st.session_state.generated_guide, 'generated_guide.pdf'):
+           st.error("PDF creation failed. Please check font file.")
+           return
        with open('generated_guide.pdf', 'rb') as pdf_file:
            st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf', key='download_button')
 
