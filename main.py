@@ -206,15 +206,10 @@ if st.button('Generate Guide'):
         
        # 가이드 표시 유지 (저장 후에도 계속 표시됨)
        with right_column:
-            st.markdown(
-                f"""
-                <div class="right-section">
-                    <h2>Generated Guide</h2>
-                    <p>{generated_guide}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+           st.markdown(
+               f"""
+               <div class="right-section"><h2>Generated Guide</h2><p>{generated_guide}</p></div>
+               """, unsafe_allow_html=True)
         
        # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
        if generated_guide.strip():
