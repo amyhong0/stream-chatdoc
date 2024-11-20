@@ -169,7 +169,7 @@ if 'generated_guide' not in st.session_state:
    st.session_state.generated_guide = ""
 
 # 버튼 클릭 시 동작
-if st.button('Generate Guide', key='generate_button', use_container_width=True):
+if st.button('Generate Guide', key='generate_button', use_container_width=True, width=None):
    if conversation_input.strip() == "":
        st.error("Please enter a conversation.")
    else:
