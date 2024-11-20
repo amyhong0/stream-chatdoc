@@ -4,6 +4,19 @@ import streamlit.components.v1 as components
 # 페이지 설정: 기본 타이틀 제거 및 레이아웃 설정
 st.set_page_config(page_title=None, layout="wide", initial_sidebar_state="collapsed")
 
+# CSS를 사용하여 전체 배경을 블랙으로 설정
+st.markdown(
+    """
+    <style>
+    /* 전체 앱의 배경을 블랙으로 설정 */
+    .stApp {
+        background-color: black; !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # HTML 코드 직접 삽입
 html_content = """
 <!DOCTYPE html>
