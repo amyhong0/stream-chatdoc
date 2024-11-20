@@ -6,7 +6,7 @@
     <title>Chat Doc</title>
     <style>
         body {
-            background-color: black;
+            background-color: black; /* 전체 배경색을 검정색으로 설정 */
             color: white;
             font-family: Arial, sans-serif;
         }
@@ -34,12 +34,10 @@
             border-radius: 10px;
             margin: 10px;
             color: white;
+            width: 50%; /* 두 섹션의 너비를 같게 설정 */
         }
         .left-section {
             background-color: #4f4f4f;
-        }
-        .right-section {
-            background-color: #333333;
         }
         h2 {
             font-size: 1.5rem;
@@ -51,11 +49,11 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 20px;
+            gap: 20px; /* 좌우 섹션 간의 간격 */
         }
         @media (min-width: 1000px) {
             .left-section, .right-section {
-                width: calc(50% - 20px);
+                width: calc(50% - 20px); /* 큰 화면에서 좌우 섹션의 너비를 동일하게 유지 */
             }
         }
     </style>
@@ -64,7 +62,7 @@
 
     <!-- 메인 타이틀과 아이콘 -->
     <div class="title-section">
-        <img src="chatdoc_icon.png" alt="Chat Doc Icon">
+        <img src="chatdoc_icon.png" alt="Chat Doc Icon"> <!-- 아이콘 경로가 제대로 설정되어 있는지 확인 -->
         <h1>Chat Doc</h1>
     </div>
     <p style="text-align: center;">I'll create a work guide to help you stay on task. Please enter your Messenger conversations and I'll organize them into a task guide.</p>
@@ -87,7 +85,6 @@
             <h2>Generated Guide</h2>
             <p>The generated guide will appear here after you input a conversation and click 'Generate Guide'.</p>
         </div>
-
     </div>
 
     <!-- JavaScript 코드 -->
