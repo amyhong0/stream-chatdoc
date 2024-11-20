@@ -205,9 +205,8 @@ if st.button('Generate Guide'):
 
         
        # 가이드 표시 유지 (저장 후에도 계속 표시됨)
-       generated_guide = get_chat_completions(conversation_input)
-        
-       with right_column:
+        generated_guide = get_chat_completions(conversation_input)
+        with right_column:
             st.markdown(
                 f"""
                 <div class="right-section">
@@ -219,7 +218,7 @@ if st.button('Generate Guide'):
             )
         
        # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
-       if generated_guide.strip():
-           create_pdf(generated_guide, 'generated_guide.pdf')
-           with open('generated_guide.pdf', 'rb') as pdf_file:
+        if generated_guide.strip():
+            create_pdf(generated_guide, 'generated_guide.pdf')
+            with open('generated_guide.pdf', 'rb') as pdf_file:
                st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
