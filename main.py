@@ -138,13 +138,13 @@ with right_column:
 def create_pdf(content, filename):
     pdf = FPDF()
     
-    # UTF-8 지원 폰트 추가 (DejaVu 폰트 사용)
+    # UTF-8 지원 폰트 추가 (NanumGothic 폰트 사용)
     pdf.add_page()
     
-    # DejaVu 폰트는 UTF-8을 지원하는 폰트 중 하나입니다.
-    pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
+    # NanumGothic 폰트를 추가 (한글 지원)
+    pdf.add_font('Nanum', '', 'NanumGothic.ttf', uni=True)
     
-    pdf.set_font('DejaVu', '', 12)
+    pdf.set_font('Nanum', '', 12)
 
     for line in content.split('\n'):
         pdf.multi_cell(200, 10, txt=line)
@@ -203,10 +203,11 @@ if st.button('Generate Guide'):
             except Exception as e:
                 return f"LaaS API 호출 중 예외 발생: {e}"
 
-        generated_guide = get_chat_completions(conversation_input)
         
-        # 가이드 표시 유지 (저장 후에도 계속 표시됨)
-        with right_column:
+       # 가이드 표시 유지 (저장 후에도 계속 표시됨)
+       generated_guide = get_chat_completions(conversation_input)
+        
+       with right_column:
             st.markdown(
                 f"""
                 <div class="right-section">
@@ -217,8 +218,8 @@ if st.button('Generate Guide'):
                 unsafe_allow_html=True,
             )
         
-        # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
-        if generated_guide.strip():
-            create_pdf(generated_guide, 'generated_guide.pdf')
-            with open('generated_guide.pdf', 'rb') as pdf_file:
-                st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
+       # PDF 저장 버튼 추가 (Generated Guide 섹션 밑에 표시)
+       if generated_guide.strip():
+           create_pdf(generated_guide, 'generated_guide.pdf')
+           with open('generated_guide.pdf', 'rb') as pdf_file:
+               st.download_button('Save as PDF', pdf_file, file_name='generated_guide.pdf')
